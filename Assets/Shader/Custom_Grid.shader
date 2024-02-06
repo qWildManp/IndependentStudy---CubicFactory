@@ -1,9 +1,9 @@
-Shader "Unlit/Grid"
+Shader "Unlit/Custom_Grid"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "black" {}
-        [HDR]_GridColour ("Grid Colour", Color) = (.255,.0,.0,1)
+        [HDR]_GridColour ("Grid Colour", Color) = (.255,.0,.0,.0)
         _GridSize ("Grid Size", Range(0.01, 1.0)) = 0.1
         _GridLineThickness ("Grid Line Thickness", Range(0.00001, 0.010)) = 0.003
         _Alpha ("Grid Transparency", Range(0, 1)) = 0.5
