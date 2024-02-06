@@ -7,6 +7,9 @@ public class GridBaseMovement : MonoBehaviour
     public float moveSpeed;
     public Transform movePoint;
 
+    public GridData gridsData;
+    public ObjectsDatabaseSO dataBase;
+    
     private void Start()
     {
         movePoint.parent = null;
@@ -28,5 +31,10 @@ public class GridBaseMovement : MonoBehaviour
                 movePoint.position += new Vector3(0f, 0f, Input.GetAxisRaw("Vertical"));
             }
         }
+
+        /*if(!gridsData.CanPlaceObejctAt(Vector3Int.FloorToInt(transform.position), dataBase.objectsData[0].Size))
+        {
+            GetComponent<MeshRenderer>().material.color = Color.red;
+        }*/
     }
 }
