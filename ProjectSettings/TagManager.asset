@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Object
+  - Floor
   - CinemachineTarget
   - Box
   layers:
