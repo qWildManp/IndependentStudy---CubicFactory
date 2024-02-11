@@ -96,6 +96,7 @@ public class GridSystem : MonoBehaviour
         return null; // Out of bounds
     }
 
+    // Map world position to the gridPos
     public Vector2Int WorldToGridPosition(Vector3 worldPosition)
     {
         int x = Mathf.FloorToInt((worldPosition.x + (cellSize / 2)) / cellSize) - 1;
@@ -183,6 +184,7 @@ public class GridSystem : MonoBehaviour
 
 
     // Move Begin Update
+    // Update isMoving status and disconnect the object with the original cell
     public void ObjectStartMoving(int row, int column)
     {
         GridCell cell = GetCell(row, column);
@@ -196,6 +198,7 @@ public class GridSystem : MonoBehaviour
 
 
     // Move End Update
+    // Update isMoving status and attach the object to the new cell
     public void ObjectEndMoving(GameObject obj, int row, int column)
     {
         GridCell cell = GetCell(row, column);
