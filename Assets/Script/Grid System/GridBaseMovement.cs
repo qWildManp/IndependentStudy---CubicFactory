@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class GridBaseMovement : MonoBehaviour
 {
     public float moveSpeed;
     public Transform movePoint;
-
-    public GridData gridsData;
-    public ObjectsDatabaseSO dataBase;
     
     private void Start()
     {
@@ -17,24 +15,55 @@ public class GridBaseMovement : MonoBehaviour
 
     private void Update()
     {
+
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
-        if(Vector3.Distance(transform.position,movePoint.position) <= 0.05f)
+        Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+
+        if (gameObject.GetComponent<ObjectController>().isMoving && transform.position == movePoint.position)
         {
-            if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+
+            GridSystem.Instance.ObjectEndMoving(gameObject , gridPos.x, gridPos.y);
+        }
+
+        
+
+
+        if (gameObject.GetComponent<ObjectController>().isMoving == false && Vector3.Distance(transform.position,movePoint.position) <= 0.05f)
+        {
+            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
             {
-                movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+                Direction dir = Input.GetAxisRaw("Horizontal") > 0 ? Direction.E : Direction.W;
+                GridCell targetCell = GridSystem.Instance.GetSurroundingCell(gridPos.x, gridPos.y, dir);
+                if (targetCell != null)
+                {
+                    if (targetCell.IsAccessible && targetCell.Obj == null)
+                    {
+                        GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y);
+                        movePoint.position += new Vector3(0f, 0f, Input.GetAxisRaw("Horizontal"));
+                        
+                    }
+                    
+                }
+                
             }
             
             if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
             {
-                movePoint.position += new Vector3(0f, 0f, Input.GetAxisRaw("Vertical"));
+                Direction dir = Input.GetAxisRaw("Vertical") > 0 ? Direction.N : Direction.S;
+                GridCell targetCell = GridSystem.Instance.GetSurroundingCell(gridPos.x, gridPos.y, dir);
+                if (targetCell != null)
+                {
+                    if (targetCell.IsAccessible && targetCell.Obj == null)
+                    {
+                        GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y);
+                        movePoint.position += new Vector3(-1 * Input.GetAxisRaw("Vertical"), 0f, 0f);
+                    }
+
+                }
             }
         }
 
-        /*if(!gridsData.CanPlaceObejctAt(Vector3Int.FloorToInt(transform.position), dataBase.objectsData[0].Size))
-        {
-            GetComponent<MeshRenderer>().material.color = Color.red;
-        }*/
+
     }
 }

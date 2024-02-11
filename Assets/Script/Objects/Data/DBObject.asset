@@ -10,11 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d096425de17de4b41af3e9c0ecb38f58, type: 3}
-  m_Name: Database
+  m_Name: DBObject
   m_EditorClassIdentifier: 
-  objectsData:
-  - <Name>k__BackingField: Test1
-    <ID>k__BackingField: 1000
-    <Size>k__BackingField: {x: 2, y: 1}
-    <Prefab>k__BackingField: {fileID: 5244201431964712091, guid: 10d95a7fec0688249aa1aa37dbd19d17,
-      type: 3}
+  objects:
+  - {fileID: 11400000, guid: d1f06a42aee67e442848863e5e1c88b2, type: 2}
+  - {fileID: 11400000, guid: c3b4d14a76e5078499c7f1963dbf6590, type: 2}
