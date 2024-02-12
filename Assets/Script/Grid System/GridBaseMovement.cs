@@ -13,6 +13,16 @@ public class GridBaseMovement : MonoBehaviour
         movePoint.parent = null;
     }
 
+    IEnumerator MoveInstance(Direction dir, int moveID)
+    {
+        while (Vector3.Distance(transform.position, movePoint.position) > 0.05f)
+        {
+
+            yield return new WaitForFixedUpdate();
+        }
+        EventBus.Broadcast<int>(EventTypes.BoxMove, moveID);
+    }
+
     private void Update()
     {
 
