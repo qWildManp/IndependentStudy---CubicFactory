@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FloorController : MonoBehaviour
 {
-    public FloorData config;
+    public FloorData config;    // Scriptable Object reference
 
     // Start is called before the first frame update
     void Start()
