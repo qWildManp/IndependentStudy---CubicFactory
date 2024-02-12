@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bb688c1122217e84ebe6c35b8dd2b81e
+guid: 677f5b6b5a1735448b5ce28fd9a6d532
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,18 +33,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Push
+      name: Push_Pose
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 60
-      lastFrame: 179
+      firstFrame: 0
+      lastFrame: 49
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

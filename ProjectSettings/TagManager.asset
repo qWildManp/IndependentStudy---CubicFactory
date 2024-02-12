@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Object
   - Floor
+  - CinemachineTarget
+  - Box
   layers:
   - Default
   - TransparentFX

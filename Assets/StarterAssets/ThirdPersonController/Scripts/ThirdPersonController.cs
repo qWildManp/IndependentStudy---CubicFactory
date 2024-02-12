@@ -1,4 +1,6 @@
-﻿ using UnityEngine;
+﻿ using System;
+ using UnityEngine;
+ using Random = UnityEngine.Random;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -49,6 +51,10 @@ namespace StarterAssets
         [Header("Player Grounded")]
         [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
         public bool Grounded = true;
+        
+        
+        [Header("Player CanMove")]
+        public bool isPushing = false;
 
         [Tooltip("Useful for rough ground")]
         public float GroundedOffset = -0.14f;
@@ -97,6 +103,8 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
+        private int _animIDPushPose;
+        private int _animIDPushAnimation;
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
@@ -173,6 +181,7 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDPushPose = Animator.StringToHash("Push");
         }
 
         private void GroundedCheck()
@@ -249,7 +258,7 @@ namespace StarterAssets
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
             // normalise input direction
-            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            Vector3 inputDirection = new Vector3(_input.move.y, 0.0f, _input.move.x).normalized;
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
@@ -348,6 +357,11 @@ namespace StarterAssets
             }
         }
 
+        private void ChangePushingStatus(bool isPush)
+        {
+            isPushing = isPush;
+            _animator.SetBool(_animIDPushPose,isPushing);
+        }
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
             if (lfAngle < -360f) lfAngle += 360f;
@@ -387,6 +401,28 @@ namespace StarterAssets
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Box"))
+            {
+                RaycastHit hit;
+                Vector3 playerFacing = transform.forward;
+                Ray castingRay = new Ray(transform.position, playerFacing);
+                if (Physics.Raycast(castingRay, out hit))
+                {
+                    Debug.Log(hit.collider.name);
+                    ChangePushingStatus(true);
+                }
+                
+                
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            ChangePushingStatus(false);
         }
     }
 }
