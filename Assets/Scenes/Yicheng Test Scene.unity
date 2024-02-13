@@ -324,6 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c11b77281c8066c4bba8d4d846451605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridOrigin: {x: 0.5, y: 0, z: 0.5}
   floorDatabase: {fileID: 11400000, guid: ede17fe61d8d9b44c82eda104eb3b23a, type: 2}
   objectDatabase: {fileID: 11400000, guid: 9f5dcae0b340a414abef28bf28cbcfc7, type: 2}
   rows: 10
@@ -687,7 +688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb365b878167844491656af80cb4067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 0
+  itemID: 4
   itemName: Hole
   isAccessible: 0
 --- !u!1 &1437229510
@@ -947,7 +948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e864a239d1c084b86166f0cd44a176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 2
+  itemID: 1
   itemName: Box
 --- !u!1 &1663098121 stripped
 GameObject:
@@ -988,7 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e864a239d1c084b86166f0cd44a176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 2
+  itemID: 1
   itemName: Box
 --- !u!1 &1748653724 stripped
 GameObject:
@@ -1022,7 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e864a239d1c084b86166f0cd44a176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 2
+  itemID: 1
   itemName: Box
 --- !u!1 &1800256835 stripped
 GameObject:

@@ -12,6 +12,8 @@ public class GridSystem : MonoBehaviour
 {
     public static GridSystem Instance { get; private set; }
 
+
+    public Vector3 gridOrigin;
     public FloorDatabaseSO floorDatabase;
     public ObjectsDatabaseSO objectDatabase;
     public int rows = 10;
@@ -93,8 +95,8 @@ public class GridSystem : MonoBehaviour
     // Map world position to the gridPos
     public Vector2Int WorldToGridPosition(Vector3 worldPosition)
     {
-        int x = Mathf.FloorToInt((worldPosition.x + (cellSize / 2)) / cellSize) - 1;
-        int y = Mathf.FloorToInt((worldPosition.z + (cellSize / 2)) / cellSize) - 1;
+        int x = Mathf.RoundToInt((worldPosition.x - gridOrigin.x) / cellSize);
+        int y = Mathf.RoundToInt((worldPosition.z - gridOrigin.z) / cellSize);
         return new Vector2Int(x, y);
     }
 
@@ -161,7 +163,7 @@ public class GridSystem : MonoBehaviour
                 if (x == 0 && y == 0) continue; // Skip the current cell
 
                 GridCell cell = GetCell(row + x, column + y);
-                if (cell != null && cell.Floor.GetComponent<Floor>().GetIsAccessable())
+                if (cell != null)
                 {
                     surroundingCells.Add(cell);
                 }
@@ -190,6 +192,7 @@ public class GridSystem : MonoBehaviour
         if (cell != null)
         {
             Vector2Int target = DirectionToPosition(row, column, dir);
+            Debug.Log(target);
             GridCell neighbor = GetCell(target.x, target.y);
             if (neighbor != null && (neighbor.Floor == null || neighbor.Floor.GetComponent<Floor>().GetIsAccessable())
                    && neighbor.Obj == null)
@@ -197,6 +200,8 @@ public class GridSystem : MonoBehaviour
                 GridBaseMovement.Instance.MoveItem(cell.Obj, dir, i);
                 cell.Obj = null;
                 return true;
+            } else
+            {
             }
         }
         return false;

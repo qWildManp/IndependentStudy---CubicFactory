@@ -34,7 +34,10 @@ public class Box : Interactable
             return;
         lastMoveIdentifier = moveIdentifier;
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
-        GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y, dir, moveIdentifier++);
+        if (!GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y, dir, moveIdentifier++))
+        {
+            return;
+        }
         isMoving = true;
         EventBus.AddListener<int>(EventTypes.BoxMove, StopMovement);
     }
