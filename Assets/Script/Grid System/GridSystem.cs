@@ -62,9 +62,9 @@ public class GridSystem : MonoBehaviour
             if (IsWithinGrid(gridPos))
             {
                 gridArray[gridPos.x, gridPos.y].Floor = floor;
-                if (!floor.GetComponent<FloorController>().config.isAccessible)
+                if (!floor.GetComponent<Floor>().GetIsAccessable())
                 {
-                    gridArray[gridPos.x, gridPos.y].IsAccessible = false;
+                    gridArray[gridPos.x, gridPos.y].Floor.GetComponent<Floor>().SetAccessability(false);
                 }
             }
         }
@@ -79,12 +79,6 @@ public class GridSystem : MonoBehaviour
             }
           
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public GridCell GetCell(int row, int column)
@@ -102,6 +96,11 @@ public class GridSystem : MonoBehaviour
         int x = Mathf.FloorToInt((worldPosition.x + (cellSize / 2)) / cellSize) - 1;
         int y = Mathf.FloorToInt((worldPosition.z + (cellSize / 2)) / cellSize) - 1;
         return new Vector2Int(x, y);
+    }
+
+    public Vector3 GridToWorldPosition(Vector2Int gridPos)
+    {
+        return new Vector3(gridPos.x * cellSize + 0.5f, 0, gridPos.x * cellSize + 0.5f);
     }
 
     bool IsWithinGrid(Vector2Int gridPos)
@@ -162,7 +161,7 @@ public class GridSystem : MonoBehaviour
                 if (x == 0 && y == 0) continue; // Skip the current cell
 
                 GridCell cell = GetCell(row + x, column + y);
-                if (cell != null && cell.IsAccessible)
+                if (cell != null && cell.Floor.GetComponent<Floor>().GetIsAccessable())
                 {
                     surroundingCells.Add(cell);
                 }
@@ -185,15 +184,22 @@ public class GridSystem : MonoBehaviour
 
     // Move Begin Update
     // Update isMoving status and disconnect the object with the original cell
-    public void ObjectStartMoving(int row, int column)
+    public bool ObjectStartMoving(int row, int column, Direction dir, int i)
     {
         GridCell cell = GetCell(row, column);
         if (cell != null)
         {
-            cell.Obj.GetComponent<ObjectController>().isMoving = true;
-            // Debug.Log(cell.Obj.GetComponent<ObjectController>().isMoving);
-            cell.Obj = null;
+            Vector2Int target = DirectionToPosition(row, column, dir);
+            GridCell neighbor = GetCell(target.x, target.y);
+            if (neighbor != null && (neighbor.Floor == null || neighbor.Floor.GetComponent<Floor>().GetIsAccessable())
+                   && neighbor.Obj == null)
+            {
+                GridBaseMovement.Instance.MoveItem(cell.Obj, dir, i);
+                cell.Obj = null;
+                return true;
+            }
         }
+        return false;
     }
 
 
@@ -205,7 +211,6 @@ public class GridSystem : MonoBehaviour
         if (cell != null)
         {
             cell.Obj = obj;
-            obj.GetComponent<ObjectController>().isMoving = false;
         };
     }
 
