@@ -5,15 +5,50 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class GridBaseMovement : MonoBehaviour
 {
-    public float moveSpeed;
-    public Transform movePoint;
-    
+    public static GridBaseMovement Instance;
+
     private void Start()
     {
-        movePoint.parent = null;
+        Instance = this;
     }
 
-    private void Update()
+    public void MoveItem(GameObject obj, Direction dir, int moveID)
+    {
+        StartCoroutine(MoveInstance(obj, dir, moveID));
+    }
+
+    private IEnumerator MoveInstance(GameObject obj, Direction dir, int moveID)
+    {
+        float duration = 0.99f;
+        float timeElapsed = 0;
+        Vector3 targetPath = Vector3.zero;
+        switch (dir)
+        {
+            case Direction.N:
+                targetPath = Vector3.left;
+                break;
+            case Direction.S:
+                targetPath = Vector3.right;
+                break;
+            case Direction.E:
+                targetPath = Vector3.forward;
+                break;
+            case Direction.W:
+                targetPath = Vector3.back;
+                break;
+        }
+        while (timeElapsed < duration)
+        {
+            obj.transform.position += Time.fixedDeltaTime * targetPath;
+            timeElapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(obj.transform.position);
+        GridSystem.Instance.ObjectEndMoving(obj, gridPos.x, gridPos.y);
+        EventBus.Broadcast<int>(EventTypes.BoxMove, moveID);
+    }
+
+    /*private void Update()
     {
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime); // Box moving towards movePoint
@@ -37,10 +72,10 @@ public class GridBaseMovement : MonoBehaviour
                 GridCell targetCell = GridSystem.Instance.GetSurroundingCell(gridPos.x, gridPos.y, dir); // Get the target cell
                 if (targetCell != null)
                 {
-                    if (targetCell.IsAccessible && targetCell.Obj == null)      // Allow to move
+                    if (targetCell.Floor.GetComponent<Floor>().GetIsAccessable() && targetCell.Obj == null)      // Allow to move
                     {
                         // Call ObjectStartMoving before moving, update isMoving status and disconnect with the original cell
-                        GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y); 
+                        //GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y); 
 
                         movePoint.position += new Vector3(0f, 0f, Input.GetAxisRaw("Horizontal"));  // Move movePoint
                         
@@ -56,10 +91,10 @@ public class GridBaseMovement : MonoBehaviour
                 GridCell targetCell = GridSystem.Instance.GetSurroundingCell(gridPos.x, gridPos.y, dir);    // Get the target cell
                 if (targetCell != null)
                 {
-                    if (targetCell.IsAccessible && targetCell.Obj == null)      // Allow to move
+                    if (targetCell.Floor.GetComponent<Floor>().GetIsAccessable() && targetCell.Obj == null)      // Allow to move
                     {
                         // Call ObjectStartMoving before moving, update isMoving status and disconnect with the original cell
-                        GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y);
+                        //GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y);
                         movePoint.position += new Vector3(-1 * Input.GetAxisRaw("Vertical"), 0f, 0f);   // Move movePoint
                     }
 
@@ -68,5 +103,5 @@ public class GridBaseMovement : MonoBehaviour
         }
 
 
-    }
+    }*/
 }
