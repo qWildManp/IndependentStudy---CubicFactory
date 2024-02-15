@@ -10,6 +10,7 @@ public class Box : Interactable
 
     private void Update()
     {
+        /*
         if (itemID == 1)
         {
             float x = Input.GetAxisRaw("Horizontal");
@@ -21,7 +22,7 @@ public class Box : Interactable
             {
                 Move(y == 1 ? Direction.N : Direction.S);
             }
-        }
+        }*/
     }
 
     /// <summary>
