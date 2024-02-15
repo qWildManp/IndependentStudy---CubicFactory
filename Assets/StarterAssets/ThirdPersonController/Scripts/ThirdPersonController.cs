@@ -1,9 +1,10 @@
-﻿ using System;
+﻿using System;
  using UnityEngine;
  using Random = UnityEngine.Random;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
+
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
@@ -53,8 +54,12 @@ namespace StarterAssets
         public bool Grounded = true;
         
         
-        [Header("Player CanMove")]
-        public bool isPushing = false;
+        [Header("Player Interaction with Box")]
+        public bool isInteracting = false;
+        public bool beginInteract = false;
+        public bool canMove = true;
+        //detect if player can interact with box
+        [SerializeField] private bool closeToBox;
 
         [Tooltip("Useful for rough ground")]
         public float GroundedOffset = -0.14f;
@@ -105,6 +110,7 @@ namespace StarterAssets
         private int _animIDMotionSpeed;
         private int _animIDPushPose;
         private int _animIDPushAnimation;
+        private int _animIDPullAnimation;
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
@@ -133,6 +139,11 @@ namespace StarterAssets
 
         private void Awake()
         {
+            // Initialize Box interaction variables
+            canMove = true;
+            beginInteract = false;
+            isInteracting = false;
+            closeToBox = false;
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -166,7 +177,12 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
-            Move();
+            if(canMove)
+                Move();
+            InteractWithBox();
+            
+            Vector2Int GridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+            Debug.Log("Player on Grid: " + GridPos);
         }
 
         private void LateUpdate()
@@ -181,7 +197,9 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-            _animIDPushPose = Animator.StringToHash("Push");
+            _animIDPushPose = Animator.StringToHash("Interact");
+            _animIDPushAnimation = Animator.StringToHash("isPushing");
+            _animIDPullAnimation = Animator.StringToHash("isPulling");
         }
 
         private void GroundedCheck()
@@ -222,6 +240,7 @@ namespace StarterAssets
 
         private void Move()
         {
+            
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -258,7 +277,7 @@ namespace StarterAssets
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
             // normalise input direction
-            Vector3 inputDirection = new Vector3(_input.move.y, 0.0f, _input.move.x).normalized;
+            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
@@ -279,6 +298,7 @@ namespace StarterAssets
             // move the player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            //_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime));                 
 
             // update animator if using character
             if (_hasAnimator)
@@ -355,13 +375,10 @@ namespace StarterAssets
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
             }
-        }
 
-        private void ChangePushingStatus(bool isPush)
-        {
-            isPushing = isPush;
-            _animator.SetBool(_animIDPushPose,isPushing);
+            //_controller.Move(new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
         }
+        
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
             if (lfAngle < -360f) lfAngle += 360f;
@@ -403,6 +420,80 @@ namespace StarterAssets
             }
         }
 
+        private void InteractWithBox()
+        {
+            if (!closeToBox||!Grounded)// if mouse is not close to box or in the air
+            {
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.F)&&!beginInteract)//enter interact mode
+            {
+                ChangeInteractStatus(true);
+            }else if (Input.GetKeyDown(KeyCode.F) && beginInteract)//exit interact mode
+            {
+                ChangeInteractStatus(false);
+            }
+
+            if (beginInteract)
+            {
+                
+                Vector2Int playerGridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+                Box attachedBox = GameManager.Instance.GetPlayerAttachedBox();
+                Vector2Int attachBoxGridPos = GridSystem.Instance.WorldToGridPosition(attachedBox.transform.position);
+                //Debug.Log("Box Grid loc :" + attachBoxGridPos);
+                Vector2 playerBoxDir = (attachBoxGridPos - playerGridPos);
+                Debug.Log("Player -> Box Dir :" + playerBoxDir);
+                Vector2 normalizeInput = _input.move.normalized;
+                Debug.Log("Player normalize Input:" + normalizeInput);
+                if (playerBoxDir == normalizeInput)//push
+                {
+                    if (!isInteracting)
+                    {
+                        ChangePushStatus(true);
+                        Debug.Log("PushForward");
+                        // TODO: Actual Movement
+                        Invoke(nameof(ResetInteractingStatus),3);
+                    }
+                    
+                }else if (-1 * playerBoxDir == normalizeInput)//pull
+                {
+                    if (!isInteracting)
+                    {
+                        ChangePullStatus(true);
+                        // TODO: Actual Movement
+                        Debug.Log("PullBackWord");
+                        Invoke(nameof(ResetInteractingStatus),3);
+                    }
+                }
+            }
+        }
+
+        private void ResetInteractingStatus()
+        {
+            Debug.Log("Finish");
+            isInteracting = false;
+            _animator.SetBool(_animIDPushAnimation, false);
+            _animator.SetBool(_animIDPullAnimation, false);
+        }
+        private void ChangeInteractStatus(bool canInteract)// change anim status of interact
+        {
+            beginInteract = canInteract;
+            canMove = !canInteract;
+            _animator.SetBool(_animIDPushPose,beginInteract);
+        }
+
+        private void ChangePushStatus(bool pushing)//change push anim status
+        {
+            isInteracting = pushing;
+            _animator.SetBool(_animIDPushAnimation, pushing);
+        }
+
+        private void ChangePullStatus(bool pulling)//change pull anim status
+        {
+            isInteracting = pulling;
+            _animator.SetBool(_animIDPullAnimation, pulling);
+        }
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Box"))
@@ -412,8 +503,10 @@ namespace StarterAssets
                 Ray castingRay = new Ray(transform.position, playerFacing);
                 if (Physics.Raycast(castingRay, out hit))
                 {
-                    Debug.Log(hit.collider.name);
-                    ChangePushingStatus(true);
+                    closeToBox = true;
+                    EventBus.Broadcast(EventTypes.RegisterPlayerInteractBox,other.GetComponent<Box>());
+                    //Debug.Log(hit.collider.name);
+                    //ChangePushingStatus(true);
                 }
                 
                 
@@ -422,7 +515,8 @@ namespace StarterAssets
 
         private void OnTriggerExit(Collider other)
         {
-            ChangePushingStatus(false);
+            closeToBox = false;
+            EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
         }
     }
 }

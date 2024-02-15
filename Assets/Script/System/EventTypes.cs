@@ -5,4 +5,8 @@ using UnityEngine;
 public enum EventTypes
 {
     BoxMove,
+    CamRootClockWiseRotate,
+    CamRootCounterClockWiseRotate,
+    RegisterPlayerInteractBox,
+    ClearPlayerInteractBox,
 }
