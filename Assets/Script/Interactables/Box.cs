@@ -29,18 +29,22 @@ public class Box : Interactable
     /// Player resulted box movements
     /// </summary>
     /// <param name="dir"></param>
-    public void Move(Direction dir)
+    public bool Move(Direction dir)
     {
         if (isMoving)
-            return;
+            return false;
         lastMoveIdentifier = moveIdentifier;
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
         if (!GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y, dir, moveIdentifier++))
         {
-            return;
+            isMoving = true;
+            EventBus.AddListener<int>(EventTypes.BoxMove, StopMovement);
+            return true;
+            
         }
-        isMoving = true;
-        EventBus.AddListener<int>(EventTypes.BoxMove, StopMovement);
+
+        return false;
+        
     }
 
     private void StopMovement(int i)

@@ -53,9 +53,9 @@ public class GridSystem : MonoBehaviour
             }
         }
 
-        // Find all objects tagged as "Floor" or "Object"
+        // Find all objects tagged as "Floor" or "Box"
         GameObject[] floors = GameObject.FindGameObjectsWithTag("Floor");
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Object");
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Box");
 
         // Load floors
         foreach (var floor in floors)
