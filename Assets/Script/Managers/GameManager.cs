@@ -9,6 +9,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     [SerializeField] private Box playerAttachBox;
     
+    [SerializeField] public CamRootRotation camRoot;
+    
     // Start is called before the first frame update
     void Start()
     {

@@ -14,7 +14,7 @@ public class GridBaseMovement : MonoBehaviour
 
     public void MoveItem(GameObject obj, Direction dir, int moveID)
     {
-        StartCoroutine(MoveInstance(obj, dir, moveID));
+       StartCoroutine(MoveInstance(obj, dir, moveID));
     }
 
     private IEnumerator MoveInstance(GameObject obj, Direction dir, int moveID)

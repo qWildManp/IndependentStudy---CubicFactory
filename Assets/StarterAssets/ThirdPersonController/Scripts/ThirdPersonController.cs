@@ -1,5 +1,6 @@
 ﻿using System;
- using UnityEngine;
+using DG.Tweening;
+using UnityEngine;
  using Random = UnityEngine.Random;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -181,8 +182,8 @@ namespace StarterAssets
                 Move();
             InteractWithBox();
             
-            Vector2Int GridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
-            Debug.Log("Player on Grid: " + GridPos);
+            //Vector2Int GridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+            //Debug.Log("Player on Grid: " + GridPos);
         }
 
         private void LateUpdate()
@@ -278,18 +279,20 @@ namespace StarterAssets
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-
+            //Debug.Log("Input Dir :" + inputDirection);
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
             if (_input.move != Vector2.zero)
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
+               
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);
 
                 // rotate to face input direction relative to camera position
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+                //Debug.Log("Target Rotate:" + transform.rotation.eulerAngles.normalized);
             }
 
 
@@ -422,7 +425,7 @@ namespace StarterAssets
 
         private void InteractWithBox()
         {
-            if (!closeToBox||!Grounded)// if mouse is not close to box or in the air
+            if (!closeToBox||!Grounded||GameManager.Instance.camRoot.isRotating)// if mouse is not close to box or in the air or cam is rotating
             {
                 return;
             }
@@ -443,16 +446,36 @@ namespace StarterAssets
                 //Debug.Log("Box Grid loc :" + attachBoxGridPos);
                 Vector2 playerBoxDir = (attachBoxGridPos - playerGridPos);
                 Debug.Log("Player -> Box Dir :" + playerBoxDir);
-                Vector2 normalizeInput = _input.move.normalized;
+                int CamRotateAngle = Convert.ToInt32(GameManager.Instance.camRoot.transform.rotation.eulerAngles.y);
+                Debug.Log("Cam Rotate Offset -> " + CamRotateAngle);
+                Vector2 normalizeInput = RotateVector(_input.move,CamRotateAngle);
+                
+                Debug.Log("Player origin Input:" + _input.move);
                 Debug.Log("Player normalize Input:" + normalizeInput);
                 if (playerBoxDir == normalizeInput)//push
                 {
                     if (!isInteracting)
                     {
                         ChangePushStatus(true);
-                        Debug.Log("PushForward");
                         // TODO: Actual Movement
-                        Invoke(nameof(ResetInteractingStatus),3);
+                        Direction boxPushDir = ComputeDirBasedOnVector(normalizeInput);
+                        Vector3 playerMoveDir = new Vector3(normalizeInput.x, 0, normalizeInput.y);
+                        //Box Push
+                        if (attachedBox.Move(boxPushDir))// if box able to move
+                        {
+                             //Player Move
+                             transform.DOMove(transform.position + playerMoveDir, 1).OnComplete(() =>
+                             {
+                                 ResetInteractingStatus();
+                             });
+                        }
+                        else
+                        {
+                            ChangePushStatus(false);
+                        }
+                        
+                        Debug.Log("Push:" +boxPushDir);
+                        //Invoke(nameof(ResetInteractingStatus),3);
                     }
                     
                 }else if (-1 * playerBoxDir == normalizeInput)//pull
@@ -513,10 +536,40 @@ namespace StarterAssets
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)//reset when player is not touching box anymore
         {
             closeToBox = false;
+            beginInteract = false;
             EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
+        }
+
+        private Direction ComputeDirBasedOnVector(Vector2 dir)
+        {
+            if (dir.x != 0 && dir.x > dir.y)
+            {
+                if (dir.x < 0)
+                    return Direction.N;
+                
+                return Direction.S;
+            }
+            else if (dir.y != 0 && dir.y > dir.x)
+            {
+                if (dir.y < 0)
+                    return Direction.W;
+                
+                return Direction.E;
+            }
+            else
+            {
+                return Direction.None;
+            }
+        }
+        public Vector2 RotateVector(Vector2 v, float angle)
+        {
+            float radian = angle*Mathf.Deg2Rad;
+            float _x = v.x*Mathf.Cos(radian) + v.y*Mathf.Sin(radian);
+            float _y = -v.x*Mathf.Sin(radian) + v.y*Mathf.Cos(radian);
+            return new Vector2(_x,_y);
         }
     }
 }
