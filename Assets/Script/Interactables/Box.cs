@@ -10,8 +10,8 @@ public class Box : Interactable
 
     private void Update()
     {
-        /*
-        if (itemID == 1)
+        
+        /*if (itemID == 1)
         {
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");

@@ -39,12 +39,17 @@ public class GridBaseMovement : MonoBehaviour
         }
         while (timeElapsed < duration)
         {
+            if (obj == null)
+                break;
             obj.transform.position += Time.fixedDeltaTime * targetPath;
             timeElapsed += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-        Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(obj.transform.position);
-        GridSystem.Instance.ObjectEndMoving(obj, gridPos.x, gridPos.y);
+        if (obj != null)
+        {
+            Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(obj.transform.position);
+            GridSystem.Instance.ObjectEndMoving(obj, gridPos.x, gridPos.y);
+        }
         EventBus.Broadcast<int>(EventTypes.BoxMove, moveID);
     }
 

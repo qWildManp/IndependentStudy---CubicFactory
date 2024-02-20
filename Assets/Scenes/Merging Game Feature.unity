@@ -160,8 +160,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2, y: 1.0698693, z: 1.2}
-  m_Center: {x: 0, y: -0.06506541, z: 0}
+  m_Size: {x: 1.2, y: 1, z: 1.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &10571634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e864a239d1c084b86166f0cd44a176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 1
+  itemID: 0
   itemName: Box
 --- !u!4 &10571636
 Transform:
@@ -1185,6 +1185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fbf6e8e570ce743a05d6c3886b411e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRotating: 0
 --- !u!1 &1199971825
 GameObject:
   m_ObjectHideFlags: 0
