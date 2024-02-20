@@ -10,8 +10,7 @@ public class Box : Interactable
 
     private void Update()
     {
-        
-        /*if (itemID == 1)
+        if (itemID == 1)
         {
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
@@ -22,7 +21,7 @@ public class Box : Interactable
             {
                 Move(y == 1 ? Direction.N : Direction.S);
             }
-        }*/
+        }
     }
 
     /// <summary>
@@ -35,22 +34,23 @@ public class Box : Interactable
             return false;
         lastMoveIdentifier = moveIdentifier;
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
-        if (!GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y, dir, moveIdentifier++))
+        Debug.Log(moveIdentifier);
+        if (GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y, dir, moveIdentifier++))
         {
             isMoving = true;
             EventBus.AddListener<int>(EventTypes.BoxMove, StopMovement);
             return true;
-            
         }
-
         return false;
         
     }
 
     private void StopMovement(int i)
     {
+        Debug.Log(i);
         if (i == lastMoveIdentifier)
         {
+            Debug.Log("Caught");
             isMoving = false;
             EventBus.RemoveListener<int>(EventTypes.BoxMove, StopMovement);
             lastMoveIdentifier = -1;

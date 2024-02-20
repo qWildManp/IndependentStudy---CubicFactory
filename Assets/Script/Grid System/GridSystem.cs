@@ -202,6 +202,7 @@ public class GridSystem : MonoBehaviour
                 return true;
             } else
             {
+                EventBus.Broadcast<int>(EventTypes.BoxMove, i);
             }
         }
         return false;

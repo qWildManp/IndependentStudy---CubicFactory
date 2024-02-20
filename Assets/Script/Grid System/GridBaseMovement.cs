@@ -14,7 +14,14 @@ public class GridBaseMovement : MonoBehaviour
 
     public void MoveItem(GameObject obj, Direction dir, int moveID)
     {
-       StartCoroutine(MoveInstance(obj, dir, moveID));
+        if (obj != null)
+        {
+            StartCoroutine(MoveInstance(obj, dir, moveID));
+        }
+        else
+        {
+            EventBus.Broadcast<int>(EventTypes.BoxMove, moveID);
+        }
     }
 
     private IEnumerator MoveInstance(GameObject obj, Direction dir, int moveID)
@@ -39,17 +46,12 @@ public class GridBaseMovement : MonoBehaviour
         }
         while (timeElapsed < duration)
         {
-            if (obj == null)
-                break;
             obj.transform.position += Time.fixedDeltaTime * targetPath;
             timeElapsed += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-        if (obj != null)
-        {
-            Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(obj.transform.position);
-            GridSystem.Instance.ObjectEndMoving(obj, gridPos.x, gridPos.y);
-        }
+        Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(obj.transform.position);
+        GridSystem.Instance.ObjectEndMoving(obj, gridPos.x, gridPos.y);
         EventBus.Broadcast<int>(EventTypes.BoxMove, moveID);
     }
 
