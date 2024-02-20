@@ -448,8 +448,7 @@ namespace StarterAssets
                 Debug.Log("Player -> Box Dir :" + playerBoxDir);
                 int CamRotateAngle = Convert.ToInt32(GameManager.Instance.camRoot.transform.rotation.eulerAngles.y);
                 Debug.Log("Cam Rotate Offset -> " + CamRotateAngle);
-                Vector2 normalizeInput = RotateVector(_input.move,CamRotateAngle);
-                
+                Vector2 normalizeInput = RotateVector(_input.move, CamRotateAngle);
                 Debug.Log("Player origin Input:" + _input.move);
                 Debug.Log("Player normalize Input:" + normalizeInput);
                 if (playerBoxDir == normalizeInput)//push
@@ -538,6 +537,7 @@ namespace StarterAssets
 
         private void OnTriggerExit(Collider other)//reset when player is not touching box anymore
         {
+            Debug.LogWarning("Away From Box");
             closeToBox = false;
             beginInteract = false;
             EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
@@ -545,14 +545,14 @@ namespace StarterAssets
 
         private Direction ComputeDirBasedOnVector(Vector2 dir)
         {
-            if (dir.x != 0 && dir.x > dir.y)
+            if (dir.x != 0 && Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
             {
                 if (dir.x < 0)
                     return Direction.N;
                 
                 return Direction.S;
             }
-            else if (dir.y != 0 && dir.y > dir.x)
+            else if (dir.y != 0 && Mathf.Abs(dir.y) > Mathf.Abs(dir.x))
             {
                 if (dir.y < 0)
                     return Direction.W;
