@@ -35,7 +35,7 @@ public class Box : Interactable
             return false;
         lastMoveIdentifier = moveIdentifier;
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
-        Debug.Log(moveIdentifier);
+        //Debug.Log(moveIdentifier);
         if (GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y, dir, moveIdentifier++))
         {
             isMoving = true;
