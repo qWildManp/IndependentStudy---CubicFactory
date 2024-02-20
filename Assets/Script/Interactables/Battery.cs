@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Battery : Box
 {
-    private float charge = 1; // The current amount of electricity inside battery, will decay overtime if connected to items
+    public Transform BatteryIndicator;
+    public float maxIndicatorScaleY = 1.8f;
+    private float charge = 0; // The current amount of electricity inside battery, will decay overtime if connected to items
     [SerializeField]
-    private float dischargePerSecond = .05f; // Battery amount change per second
-    private int batteryStatus = 0; //1=charge, 0=not in use, -1 = discharge
+    private float dischargePerSecond = .05f; // Battery amount -change per second
+    [SerializeField]
+    private float chargePerSecond = .2f; // Battery amount +change per second
+    private bool isDischarging = false;
+    private bool isCharging = false;
 
     private void Start()
     {
+        BatteryIndicator.localScale = BatteryIndicator.localScale - new Vector3(0, BatteryIndicator.localScale.y, 0);
         StartCoroutine(BatteryBehavior());
     }
 
@@ -18,30 +24,57 @@ public class Battery : Box
     {
         while (true)
         {
-            charge = charge + batteryStatus * dischargePerSecond * Time.fixedDeltaTime;
+            if (isDischarging)
+            {
+                charge -= dischargePerSecond * Time.fixedDeltaTime;
+            }
+            else if (isCharging)
+            {
+                charge += chargePerSecond * Time.fixedDeltaTime;
+            }
+            
+            if (charge > 1)
+            {
+                charge = 1;
+            } 
+            else if (charge < 0)
+            {
+                // automatically disconnect from electric wiring if electricity used up
+                charge = 0;
+                isDischarging = false;
+            }
+
+            BatteryIndicator.localScale = new Vector3(BatteryIndicator.localScale.x, charge * maxIndicatorScaleY, BatteryIndicator.localScale.z);
             yield return new WaitForFixedUpdate();
         }
     }
 
-    /// <summary>
-    /// Discharge battery overtime if connected to circuit
-    /// </summary>
-    public void Discharge()
+    public override bool Move(Direction dir)
     {
-        batteryStatus = -1;
+        if (base.Move(dir))
+        {
+            isDischarging = false;
+            isCharging = false;
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
-    /// <summary>
-    /// Charge battery overtime if connected charger
-    /// </summary>
-    public void Charge()
+    protected override void StopMovement(int i)
     {
-        batteryStatus = 1;
-    }
-
-    public void NotInUse()
-    {
-        batteryStatus = 0;
+        base.StopMovement(i);
+        if (stopIsCaptured)
+        {
+            Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+            Floor floor = GridSystem.Instance.GetFloorBelow(gridPos);
+            if (floor != null && floor.GetCanCharge())
+            {
+                isCharging = true;
+            }
+            stopIsCaptured = false;
+        }
     }
 
 

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Box : Interactable
 {
-    private static int moveIdentifier = 0;
-    private int lastMoveIdentifier = -1;
+    protected static int moveIdentifier = 0;
+    protected int lastMoveIdentifier = -1;
+    protected bool stopIsCaptured = false;
     public bool isMoving { get; private set; } // This variable is only for player moving box, belt movement is seperate
 
     private void Update()
@@ -28,7 +29,7 @@ public class Box : Interactable
     /// Player resulted box movements
     /// </summary>
     /// <param name="dir"></param>
-    public bool Move(Direction dir)
+    public virtual bool Move(Direction dir)
     {
         if (isMoving)
             return false;
@@ -45,12 +46,11 @@ public class Box : Interactable
         
     }
 
-    private void StopMovement(int i)
+    protected virtual void StopMovement(int i)
     {
-        Debug.Log(i);
         if (i == lastMoveIdentifier)
         {
-            Debug.Log("Caught");
+            stopIsCaptured = true;
             isMoving = false;
             EventBus.RemoveListener<int>(EventTypes.BoxMove, StopMovement);
             lastMoveIdentifier = -1;

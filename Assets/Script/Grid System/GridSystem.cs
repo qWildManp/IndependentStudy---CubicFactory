@@ -179,10 +179,22 @@ public class GridSystem : MonoBehaviour
     // Given a grid pos and a direction, return the target cell info
     public GridCell GetSurroundingCell(int row, int column, Direction direction)
     {
-        GridCell cell = GetCell(DirectionToPosition(row, column, direction).x, DirectionToPosition(row, column, direction).y); 
+        Vector2Int result = DirectionToPosition(row, column, direction);
+        GridCell cell = GetCell(result.x, result.y); 
         return cell != null ? cell : null;
     }
 
+    public Floor GetFloorBelow(Vector2Int xy)
+    {
+        GridCell cell = GetCell(xy.x, xy.y);
+        return cell.Floor == null? null : cell.Floor.GetComponent<Floor>();
+    }
+
+    public Box GetBoxAbove(Vector2Int xy)
+    {
+        GridCell cell = GetCell(xy.x, xy.y);
+        return cell.Obj.GetComponent<Box>();
+    }
 
     // Move Begin Update
     // Update isMoving status and disconnect the object with the original cell
