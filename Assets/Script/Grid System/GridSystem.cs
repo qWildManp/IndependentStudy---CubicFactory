@@ -200,9 +200,6 @@ public class GridSystem : MonoBehaviour
                 GridBaseMovement.Instance.MoveItem(cell.Obj, dir, i);
                 cell.Obj = null;
                 return true;
-            } else
-            {
-                EventBus.Broadcast<int>(EventTypes.BoxMove, i);
             }
         }
         return false;
