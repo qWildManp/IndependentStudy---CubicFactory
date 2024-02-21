@@ -518,6 +518,7 @@ namespace StarterAssets
         
         private void OnTriggerEnter(Collider other)
         {
+            Debug.Log(other);
             if (other.CompareTag("Box"))
             {
                 RaycastHit hit;
@@ -538,9 +539,13 @@ namespace StarterAssets
         private void OnTriggerExit(Collider other)//reset when player is not touching box anymore
         {
             Debug.LogWarning("Away From Box");
-            closeToBox = false;
-            beginInteract = false;
-            EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
+            if (!isInteracting)
+            {
+                closeToBox = false;
+                beginInteract = false;
+                EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
+            }
+            
         }
 
         private Direction ComputeDirBasedOnVector(Vector2 dir)
