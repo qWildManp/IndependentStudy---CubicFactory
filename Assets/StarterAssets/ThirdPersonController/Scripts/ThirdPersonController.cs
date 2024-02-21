@@ -474,18 +474,33 @@ namespace StarterAssets
                         }
                         
                         Debug.Log("Push:" +boxPushDir);
-                        //Invoke(nameof(ResetInteractingStatus),3);
                     }
                     
                 }else if (-1 * playerBoxDir == normalizeInput)//pull
                 {
+                    /*
                     if (!isInteracting)
                     {
                         ChangePullStatus(true);
                         // TODO: Actual Movement
-                        Debug.Log("PullBackWord");
-                        Invoke(nameof(ResetInteractingStatus),3);
-                    }
+                        Direction pullPushDir = ComputeDirBasedOnVector(normalizeInput);
+                        Vector3 playerMoveDir = new Vector3(normalizeInput.x, 0, normalizeInput.y);
+                        //Box Push
+                        if (attachedBox.Move(pullPushDir))// if box able to move
+                        {
+                            //Player Move
+                            transform.DOMove(transform.position + playerMoveDir, 1).OnComplete(() =>
+                            {
+                                ResetInteractingStatus();
+                            });
+                        }
+                        else
+                        {
+                            ChangePushStatus(false);
+                        }
+                        
+                        Debug.Log("Pull:" +pullPushDir);
+                    }*/
                 }
             }
         }
