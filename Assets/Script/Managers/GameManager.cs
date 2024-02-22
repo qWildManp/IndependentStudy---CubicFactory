@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    [SerializeField] private ThirdPersonController player;
+    [SerializeField] public ThirdPersonController player;
 
     [SerializeField] private Box playerAttachBox;
     

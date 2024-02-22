@@ -9,4 +9,5 @@ public enum EventTypes
     CamRootCounterClockWiseRotate,
     RegisterPlayerInteractBox,
     ClearPlayerInteractBox,
+    ShowInteractHint,
 }

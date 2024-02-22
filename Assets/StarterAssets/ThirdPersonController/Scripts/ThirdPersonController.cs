@@ -425,6 +425,8 @@ namespace StarterAssets
 
         private void InteractWithBox()
         {
+            Vector2Int playerGridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+            
             if (!closeToBox||!Grounded||GameManager.Instance.camRoot.isRotating)// if mouse is not close to box or in the air or cam is rotating
             {
                 return;
@@ -432,6 +434,7 @@ namespace StarterAssets
             if (Input.GetKeyDown(KeyCode.F)&&!beginInteract)//enter interact mode
             {
                 ChangeInteractStatus(true);
+                EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
             }else if (Input.GetKeyDown(KeyCode.F) && beginInteract)//exit interact mode
             {
                 ChangeInteractStatus(false);
@@ -439,8 +442,6 @@ namespace StarterAssets
 
             if (beginInteract)
             {
-                
-                Vector2Int playerGridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
                 Box attachedBox = GameManager.Instance.GetPlayerAttachedBox();
                 Vector2Int attachBoxGridPos = GridSystem.Instance.WorldToGridPosition(attachedBox.transform.position);
                 //Debug.Log("Box Grid loc :" + attachBoxGridPos);
@@ -533,9 +534,13 @@ namespace StarterAssets
         
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other);
+            
             if (other.CompareTag("Box"))
             {
+                if (isInteracting)
+                {
+                    return;
+                }
                 RaycastHit hit;
                 Vector3 playerFacing = transform.forward;
                 Ray castingRay = new Ray(transform.position, playerFacing);
@@ -543,8 +548,8 @@ namespace StarterAssets
                 {
                     closeToBox = true;
                     EventBus.Broadcast(EventTypes.RegisterPlayerInteractBox,other.GetComponent<Box>());
-                    //Debug.Log(hit.collider.name);
-                    //ChangePushingStatus(true);
+                    EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),true);
+                    //TODO Show Interaction UI button
                 }
                 
                 
@@ -559,6 +564,7 @@ namespace StarterAssets
                 closeToBox = false;
                 beginInteract = false;
                 EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
+                EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
             }
             
         }
