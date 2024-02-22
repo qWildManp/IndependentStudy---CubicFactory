@@ -123,6 +123,8 @@ namespace StarterAssets
 
         private const float _threshold = 0.01f;
 
+        [SerializeField ]private Vector2 normalizeInput;
+
         private bool _hasAnimator;
 
         private bool IsCurrentDeviceMouse
@@ -425,15 +427,32 @@ namespace StarterAssets
 
         private void InteractWithBox()
         {
-            Vector2Int playerGridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
-            
             if (!closeToBox||!Grounded||GameManager.Instance.camRoot.isRotating)// if mouse is not close to box or in the air or cam is rotating
             {
                 return;
             }
+            
+            Vector2Int playerGridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+            Box attachedBox = GameManager.Instance.GetPlayerAttachedBox();
+            Vector2Int attachBoxGridPos = GridSystem.Instance.WorldToGridPosition(attachedBox.transform.position);
+            //Debug.Log("Box Grid loc :" + attachBoxGridPos);
+            Vector2 playerBoxDir = (attachBoxGridPos - playerGridPos);
+            //Debug.Log("Player -> Box Dir :" + playerBoxDir);
+            int CamRotateAngle = Convert.ToInt32(GameManager.Instance.camRoot.transform.rotation.eulerAngles.y);
+            
             if (Input.GetKeyDown(KeyCode.F)&&!beginInteract)//enter interact mode
             {
+                Debug.Log("Begin Interact");
+                Debug.Log("Player Gird Pos :" + playerGridPos);
+                Debug.Log("World Pos :" + GridSystem.Instance.GridToWorldPosition(playerGridPos));
+                Quaternion adjustRot = Quaternion.FromToRotation(transform.forward, new Vector3(playerBoxDir.x,0,playerBoxDir.y));
+                Vector3 adjustLoc = GridSystem.Instance.GridToWorldPosition(playerGridPos);
+                adjustLoc += new Vector3(playerBoxDir.x,0,playerBoxDir.y) * (GridSystem.Instance.cellSize/2 - _controller.radius);
+                //adjust player facing
+                transform.DORotate(transform.rotation.eulerAngles + adjustRot.eulerAngles, 1);
+                transform.DOMove(adjustLoc, 1);
                 ChangeInteractStatus(true);
+                //hide interaction hint
                 EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
             }else if (Input.GetKeyDown(KeyCode.F) && beginInteract)//exit interact mode
             {
@@ -442,16 +461,10 @@ namespace StarterAssets
 
             if (beginInteract)
             {
-                Box attachedBox = GameManager.Instance.GetPlayerAttachedBox();
-                Vector2Int attachBoxGridPos = GridSystem.Instance.WorldToGridPosition(attachedBox.transform.position);
-                //Debug.Log("Box Grid loc :" + attachBoxGridPos);
-                Vector2 playerBoxDir = (attachBoxGridPos - playerGridPos);
-                Debug.Log("Player -> Box Dir :" + playerBoxDir);
-                int CamRotateAngle = Convert.ToInt32(GameManager.Instance.camRoot.transform.rotation.eulerAngles.y);
-                Debug.Log("Cam Rotate Offset -> " + CamRotateAngle);
-                Vector2 normalizeInput = RotateVector(_input.move, CamRotateAngle);
-                Debug.Log("Player origin Input:" + _input.move);
-                Debug.Log("Player normalize Input:" + normalizeInput);
+                //Debug.Log("Cam Rotate Offset -> " + CamRotateAngle);
+                normalizeInput = RotateVector(_input.move, CamRotateAngle);
+                //Debug.Log("Player origin Input:" + _input.move);
+                //Debug.Log("Player normalize Input:" + normalizeInput);
                 if (playerBoxDir == normalizeInput)//push
                 {
                     if (!isInteracting)
@@ -479,16 +492,19 @@ namespace StarterAssets
                     
                 }else if (-1 * playerBoxDir == normalizeInput)//pull
                 {
-                    /*
+                    
                     if (!isInteracting)
                     {
                         ChangePullStatus(true);
                         // TODO: Actual Movement
-                        Direction pullPushDir = ComputeDirBasedOnVector(normalizeInput);
+                        Direction boxPullDir = ComputeDirBasedOnVector(normalizeInput);
                         Vector3 playerMoveDir = new Vector3(normalizeInput.x, 0, normalizeInput.y);
                         //Box Push
-                        if (attachedBox.Move(pullPushDir))// if box able to move
+                        RaycastHit hit;
+                        Ray castingRay = new Ray(transform.position,new Vector3(normalizeInput.x,0,normalizeInput.y));
+                        if (!Physics.Raycast(castingRay, out hit,maxDistance:GridSystem.Instance.cellSize))// if player has enough space to back
                         {
+                            attachedBox.Move(boxPullDir);
                             //Player Move
                             transform.DOMove(transform.position + playerMoveDir, 1).OnComplete(() =>
                             {
@@ -497,11 +513,9 @@ namespace StarterAssets
                         }
                         else
                         {
-                            ChangePushStatus(false);
+                            ChangePullStatus(false);
                         }
-                        
-                        Debug.Log("Pull:" +pullPushDir);
-                    }*/
+                    }
                 }
             }
         }
@@ -515,6 +529,7 @@ namespace StarterAssets
         }
         private void ChangeInteractStatus(bool canInteract)// change anim status of interact
         {
+            
             beginInteract = canInteract;
             canMove = !canInteract;
             _animator.SetBool(_animIDPushPose,beginInteract);
@@ -597,5 +612,15 @@ namespace StarterAssets
             float _y = -v.x*Mathf.Sin(radian) + v.y*Mathf.Cos(radian);
             return new Vector2(_x,_y);
         }
+        
+        void OnDrawGizmos() {
+            Gizmos.color = new Color(1, 0, 0, 0.5F);
+            
+            Ray debugRay = new Ray(transform.position + new Vector3(0,2,0), new Vector3(0,0,-1));
+            Gizmos.DrawRay(debugRay);
+            Gizmos.DrawCube(transform.position + new Vector3(0,0,-1),new Vector3(0.5f,0.5f,0.5f));
+        }
     }
+    
+    
 }
