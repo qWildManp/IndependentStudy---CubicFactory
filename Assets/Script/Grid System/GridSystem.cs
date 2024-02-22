@@ -102,7 +102,7 @@ public class GridSystem : MonoBehaviour
 
     public Vector3 GridToWorldPosition(Vector2Int gridPos)
     {
-        return new Vector3(gridPos.x * cellSize + 0.5f, 0, gridPos.x * cellSize + 0.5f);
+        return new Vector3(gridPos.x * cellSize + 0.5f, 0, gridPos.y * cellSize + 0.5f);
     }
 
     bool IsWithinGrid(Vector2Int gridPos)
@@ -228,7 +228,7 @@ public class GridSystem : MonoBehaviour
             cell.Obj = obj;
         };
     }
-
+    
 
 
 
