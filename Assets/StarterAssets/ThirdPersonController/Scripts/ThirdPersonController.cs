@@ -172,6 +172,8 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            EventBus.AddListener<bool>(EventTypes.DisableInteraction, ChangeInteractStatus);
         }
 
         private void Update()

@@ -14,8 +14,8 @@ public class GridSystem : MonoBehaviour
 
 
     public Vector3 gridOrigin;
-    public FloorDatabaseSO floorDatabase;
-    public ObjectsDatabaseSO objectDatabase;
+    //public FloorDatabaseSO floorDatabase;
+    //public ObjectsDatabaseSO objectDatabase;
     public int rows = 10;
     public int columns = 10;
     public float cellSize = 1.0f; // Size of each grid cell
@@ -204,9 +204,9 @@ public class GridSystem : MonoBehaviour
         if (cell != null)
         {
             Vector2Int target = DirectionToPosition(row, column, dir);
-            Debug.Log(target);
+            //Debug.Log(target);
             GridCell neighbor = GetCell(target.x, target.y);
-            if (neighbor != null && (neighbor.Floor == null || neighbor.Floor.GetComponent<Floor>().GetIsAccessable())
+            if (neighbor != null && (neighbor.Floor == null || neighbor.Floor.GetComponent<Floor>().GetIsAccessable() || neighbor.Floor.GetComponent<Floor>().GetIsHole())
                    && neighbor.Obj == null)
             {
                 GridBaseMovement.Instance.MoveItem(cell.Obj, dir, i);
@@ -222,9 +222,20 @@ public class GridSystem : MonoBehaviour
     // Update isMoving status and attach the object to the new cell
     public void ObjectEndMoving(GameObject obj, int row, int column)
     {
+        Debug.Log(obj);
         GridCell cell = GetCell(row, column);
         if (cell != null)
         {
+            if (cell.Floor != null)
+            {
+                Floor cur = cell.Floor.GetComponent<Floor>();
+                if (cur.GetIsHole())
+                {
+                    cur.SetFilledUp();
+                    StartCoroutine(obj.GetComponent<Box>().BoxFallInPit());
+                    return;
+                }
+            }
             cell.Obj = obj;
         };
     }

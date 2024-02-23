@@ -7,11 +7,12 @@ public class Box : Interactable
     protected static int moveIdentifier = 0;
     protected int lastMoveIdentifier = -1;
     protected bool stopIsCaptured = false;
+    protected bool isDisabled = false;
     public bool isMoving { get; private set; } // This variable is only for player moving box, belt movement is seperate
 
     private void Update()
     {
-        if (itemID == 1)
+        if (!isDisabled && itemID == -1)
         {
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
@@ -31,7 +32,7 @@ public class Box : Interactable
     /// <param name="dir"></param>
     public virtual bool Move(Direction dir)
     {
-        if (isMoving)
+        if (isMoving || isDisabled)
             return false;
         lastMoveIdentifier = moveIdentifier;
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
@@ -55,5 +56,21 @@ public class Box : Interactable
             EventBus.RemoveListener<int>(EventTypes.BoxMove, StopMovement);
             lastMoveIdentifier = -1;
         }
+    }
+
+    // Box disappear after falling into pit
+    public IEnumerator BoxFallInPit()
+    {
+        isDisabled = true;
+        float elapsed = 0;
+        while (elapsed < .5f)
+        {
+            transform.position -= 2 * Time.fixedDeltaTime * Vector3.up;
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
+        EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
+        Destroy(gameObject);
     }
 }
