@@ -222,7 +222,6 @@ public class GridSystem : MonoBehaviour
     // Update isMoving status and attach the object to the new cell
     public void ObjectEndMoving(GameObject obj, int row, int column)
     {
-        Debug.Log(obj);
         GridCell cell = GetCell(row, column);
         if (cell != null)
         {
