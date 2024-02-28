@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Floor : Interactable
 {
+    public FloorID itemID;
     [SerializeField]
     private bool isAccessible; // false=box&player cannot step onto
     private bool isElectrified;
@@ -15,11 +16,11 @@ public class Floor : Interactable
     {
         boxCollider = GetComponent<BoxCollider>();
         // TODO: Temporary solution for setting properties
-        if (itemID == 5)
+        if (itemID == FloorID.ChargingStation)
         {
             isElectrified = true;
         }
-        if (itemID == 3)
+        if (itemID == FloorID.Hole)
         {
             isHole = true;
             isAccessible = false;

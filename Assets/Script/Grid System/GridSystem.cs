@@ -21,6 +21,7 @@ public class GridSystem : MonoBehaviour
     public float cellSize = 1.0f; // Size of each grid cell
 
     public GridCell[,] gridArray;
+    private bool[,] boxMovingTarget; // Controls whether the cell in the system is currently null, but will be receiving a box soon. If so, no more boxes should be allowed to move into the place.
 
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class GridSystem : MonoBehaviour
     void InitializeGrid()
     {
         gridArray = new GridCell[rows, columns];
+        boxMovingTarget = new bool[rows, columns];
 
         for (int x = 0; x < rows; x++)
         {
@@ -64,10 +66,10 @@ public class GridSystem : MonoBehaviour
             if (IsWithinGrid(gridPos))
             {
                 gridArray[gridPos.x, gridPos.y].Floor = floor;
-                if (!floor.GetComponent<Floor>().GetIsAccessable())
+                /*if (!floor.GetComponent<Floor>().GetIsAccessable())
                 {
                     gridArray[gridPos.x, gridPos.y].Floor.GetComponent<Floor>().SetAccessability(false);
-                }
+                }*/
             }
         }
 
@@ -206,11 +208,13 @@ public class GridSystem : MonoBehaviour
             Vector2Int target = DirectionToPosition(row, column, dir);
             //Debug.Log(target);
             GridCell neighbor = GetCell(target.x, target.y);
+            // Detection is: neighbor cell should be inside boundary, it should have a floor, the floor should be accessible, and there should be no boxes on that position, or moving towards that position
             if (neighbor != null && (neighbor.Floor == null || neighbor.Floor.GetComponent<Floor>().GetIsAccessable() || neighbor.Floor.GetComponent<Floor>().GetIsHole())
-                   && neighbor.Obj == null)
+                   && neighbor.Obj == null && !boxMovingTarget[target.x, target.y])
             {
                 GridBaseMovement.Instance.MoveItem(cell.Obj, dir, i);
                 cell.Obj = null;
+                boxMovingTarget[target.x, target.y] = true;
                 return true;
             }
         }
@@ -225,6 +229,7 @@ public class GridSystem : MonoBehaviour
         GridCell cell = GetCell(row, column);
         if (cell != null)
         {
+            boxMovingTarget[row, column] = false;
             if (cell.Floor != null)
             {
                 Floor cur = cell.Floor.GetComponent<Floor>();
@@ -236,6 +241,11 @@ public class GridSystem : MonoBehaviour
                 }
             }
             cell.Obj = obj;
+            // Once everything is registered, send signal to conveyor belts
+            if (cell.Floor != null && cell.Floor.GetComponent<Floor>().itemID == FloorID.ConveyorBelt)
+            {
+                cell.Floor.GetComponent<ConveyorBelt>().MoveBox(obj.GetComponent<Box>());
+            }
         };
     }
     
