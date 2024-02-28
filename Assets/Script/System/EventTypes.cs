@@ -10,4 +10,5 @@ public enum EventTypes
     RegisterPlayerInteractBox,
     ClearPlayerInteractBox,
     ShowInteractHint,
+    DisableInteraction,
 }
