@@ -225,8 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c33268728bdb7254d827c090659206a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 1
   itemName: Battery
+  itemID: 2
   BatteryIndicator: {fileID: 1576184470531456996}
   maxIndicatorScaleY: 1.8
   dischargePerSecond: 0.05

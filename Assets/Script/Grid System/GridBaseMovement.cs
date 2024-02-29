@@ -25,7 +25,7 @@ public class GridBaseMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveInstance(GameObject obj, Direction dir, int moveID)
+    /*private IEnumerator MoveInstance(GameObject obj, Direction dir, int moveID)
     {
         float duration = 0.99f;
         float timeElapsed = 0;
@@ -54,11 +54,12 @@ public class GridBaseMovement : MonoBehaviour
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(obj.transform.position);
         GridSystem.Instance.ObjectEndMoving(obj, gridPos.x, gridPos.y);
         EventBus.Broadcast<int>(EventTypes.BoxMove, moveID);
-    }
+    }*/
+
     private void MoveObj(GameObject obj, Direction dir, int moveID)
     {
         float duration = 0.99f;
-        float timeElapsed = 0;
+        //float timeElapsed = 0;
         Vector3 targetPath = Vector3.zero;
         switch (dir)
         {

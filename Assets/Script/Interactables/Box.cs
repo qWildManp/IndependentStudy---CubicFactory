@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Box : Interactable
 {
+    public BoxID itemID;
     protected static int moveIdentifier = 0;
     protected int lastMoveIdentifier = -1;
     protected bool stopIsCaptured = false;
@@ -12,7 +13,7 @@ public class Box : Interactable
 
     private void Update()
     {
-        if (!isDisabled && itemID == -1)
+        if (!isDisabled && itemID == BoxID.Debug)
         {
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
@@ -69,6 +70,8 @@ public class Box : Interactable
             elapsed += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+
+        // TODO: will be replaced with other methods
         EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
         EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
         Destroy(gameObject);

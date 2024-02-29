@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5018802478623239178}
   - component: {fileID: 5720871708186438870}
   m_Layer: 0
-  m_Name: Floor
+  m_Name: floor
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3390382535266556011}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: -0.46, z: 2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -118,6 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb365b878167844491656af80cb4067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 1
   itemName: Floor
+  itemID: 1
   isAccessible: 1
