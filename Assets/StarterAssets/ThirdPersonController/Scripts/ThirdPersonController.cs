@@ -220,7 +220,6 @@ namespace StarterAssets
                 {
                     closeToBox = true;
                     EventBus.Broadcast(EventTypes.RegisterPlayerInteractBox,hit.transform.GetComponent<Box>());
-                    //TODO Show Interaction UI button
                     EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),true);
                 }
             }
