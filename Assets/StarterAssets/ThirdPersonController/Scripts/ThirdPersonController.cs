@@ -179,9 +179,10 @@ namespace StarterAssets
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
-
+            
             JumpAndGravity();
             GroundedCheck();
+            CheckClosestBox();
             if(canMove)
                 Move();
             InteractWithBox();
@@ -207,6 +208,29 @@ namespace StarterAssets
             _animIDPullAnimation = Animator.StringToHash("isPulling");
         }
 
+        private void CheckClosestBox()
+        {
+            RaycastHit hit;
+            LayerMask raycastLayer = LayerMask.GetMask("Interactable");
+            Vector3 playerFacing = transform.forward;
+            Ray castingRay = new Ray(transform.position + new Vector3(0,0.5f,0), playerFacing);
+            if (Physics.Raycast(castingRay, out hit,raycastLayer)&&hit.transform.CompareTag("Box"))
+            {
+                if (Vector3.Distance(transform.position + new Vector3(0, 0.5f, 0), hit.point) < 0.3f)
+                {
+                    closeToBox = true;
+                    EventBus.Broadcast(EventTypes.RegisterPlayerInteractBox,hit.transform.GetComponent<Box>());
+                    EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),true);
+                }
+            }
+            else
+            {
+                closeToBox = false;
+                beginInteract = false;
+                EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
+                EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
+            }
+        }
         private void GroundedCheck()
         {
             // set sphere position, with offset
@@ -548,43 +572,6 @@ namespace StarterAssets
             isInteracting = pulling;
             _animator.SetBool(_animIDPullAnimation, pulling);
         }
-        
-        private void OnTriggerEnter(Collider other)
-        {
-            
-            if (other.CompareTag("Box"))
-            {
-                if (isInteracting)
-                {
-                    return;
-                }
-                RaycastHit hit;
-                Vector3 playerFacing = transform.forward;
-                Ray castingRay = new Ray(transform.position, playerFacing);
-                if (Physics.Raycast(castingRay, out hit))
-                {
-                    closeToBox = true;
-                    EventBus.Broadcast(EventTypes.RegisterPlayerInteractBox,other.GetComponent<Box>());
-                    EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),true);
-                    //TODO Show Interaction UI button
-                }
-                
-                
-            }
-        }
-
-        private void OnTriggerExit(Collider other)//reset when player is not touching box anymore
-        {
-            Debug.LogWarning("Away From Box");
-            if (!isInteracting)
-            {
-                closeToBox = false;
-                beginInteract = false;
-                EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
-                EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
-            }
-            
-        }
 
         private Direction ComputeDirBasedOnVector(Vector2 dir)
         {
@@ -618,9 +605,9 @@ namespace StarterAssets
         void OnDrawGizmos() {
             Gizmos.color = new Color(1, 0, 0, 0.5F);
             
-            Ray debugRay = new Ray(transform.position + new Vector3(0,2,0), new Vector3(0,0,-1));
+            Ray debugRay = new Ray(transform.position + new Vector3(0,0.5f,0), transform.forward);
             Gizmos.DrawRay(debugRay);
-            Gizmos.DrawCube(transform.position + new Vector3(0,0,-1),new Vector3(0.5f,0.5f,0.5f));
+            //Gizmos.DrawCube(transform.position + new Vector3(0,0,-1),new Vector3(0.5f,0.5f,0.5f));
         }
     }
     
