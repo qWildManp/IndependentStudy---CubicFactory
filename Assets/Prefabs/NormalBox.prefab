@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6718149138316352168}
   - component: {fileID: 67196598662408323}
   - component: {fileID: 1337701898814436978}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NormalBox
   m_TagString: Box
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.15, y: 1, z: 0.7}
+  m_Size: {x: 1.2, y: 0.8, z: 0.75}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &1337701898814436978
 BoxCollider:
@@ -89,7 +89,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7, y: 1, z: 1.15}
+  m_Size: {x: 0.75, y: 0.8, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5877365096140193002
 GameObject:

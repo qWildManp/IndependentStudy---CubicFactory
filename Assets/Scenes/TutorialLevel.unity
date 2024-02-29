@@ -4600,7 +4600,6 @@ GameObject:
   m_Component:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
-  - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   m_Layer: 0
   m_Name: UI  Camera
@@ -4609,14 +4608,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &330585544
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0
@@ -7637,7 +7628,7 @@ PrefabInstance:
     - target: {fileID: 6785490336726206131, guid: 630891959fda5094088dc54aa914bcee,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.48
+      value: 10.55
       objectReference: {fileID: 0}
     - target: {fileID: 6785490336726206131, guid: 630891959fda5094088dc54aa914bcee,
         type: 3}
@@ -12079,7 +12070,7 @@ PrefabInstance:
     - target: {fileID: 6785490336726206131, guid: 630891959fda5094088dc54aa914bcee,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.48
+      value: 8.496
       objectReference: {fileID: 0}
     - target: {fileID: 6785490336726206131, guid: 630891959fda5094088dc54aa914bcee,
         type: 3}
@@ -13405,7 +13396,7 @@ PrefabInstance:
     - target: {fileID: 6785490336726206131, guid: 630891959fda5094088dc54aa914bcee,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.487
+      value: 13.491
       objectReference: {fileID: 0}
     - target: {fileID: 6785490336726206131, guid: 630891959fda5094088dc54aa914bcee,
         type: 3}
@@ -13415,7 +13406,7 @@ PrefabInstance:
     - target: {fileID: 6785490336726206131, guid: 630891959fda5094088dc54aa914bcee,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.51
+      value: 7.498
       objectReference: {fileID: 0}
     - target: {fileID: 6785490336726206131, guid: 630891959fda5094088dc54aa914bcee,
         type: 3}
