@@ -503,7 +503,7 @@ namespace StarterAssets
                         Vector3 playerMoveDir = new Vector3(normalizeInput.x, 0, normalizeInput.y);
                         //Box Push
                         RaycastHit hit;
-                        Ray castingRay = new Ray(transform.position,new Vector3(normalizeInput.x,0,normalizeInput.y));
+                        Ray castingRay = new Ray(transform.position + new Vector3(0,1,0),new Vector3(normalizeInput.x,0,normalizeInput.y));
                         if (!Physics.Raycast(castingRay, out hit,maxDistance:GridSystem.Instance.cellSize))// if player has enough space to back
                         {
                             attachedBox.Move(boxPullDir);
