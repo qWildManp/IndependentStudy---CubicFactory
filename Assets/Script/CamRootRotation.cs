@@ -7,6 +7,8 @@ public class CamRootRotation : MonoBehaviour
     // Start is called before the first frame update
     private bool canRotate = true;
     public bool isRotating = false;
+    public Transform followObj;
+    public float rootOffset;
     void Awake()
     {
         EventBus.AddListener(EventTypes.CamRootClockWiseRotate,ClockWiseRotation);
@@ -27,6 +29,8 @@ public class CamRootRotation : MonoBehaviour
             if(canRotate)
                 EventBus.Broadcast(EventTypes.CamRootCounterClockWiseRotate);
         }
+
+        transform.DOMove(followObj.position + new Vector3(0,rootOffset,0), 0.5f);
     }
 
     void ClockWiseRotation()

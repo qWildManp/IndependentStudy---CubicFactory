@@ -614,14 +614,14 @@ namespace StarterAssets
             float _y = -v.x*Mathf.Sin(radian) + v.y*Mathf.Cos(radian);
             return new Vector2(_x,_y);
         }
-        
+        /*
         void OnDrawGizmos() {
             Gizmos.color = new Color(1, 0, 0, 0.5F);
             
             Ray debugRay = new Ray(transform.position + new Vector3(0,2,0), new Vector3(0,0,-1));
             Gizmos.DrawRay(debugRay);
             Gizmos.DrawCube(transform.position + new Vector3(0,0,-1),new Vector3(0.5f,0.5f,0.5f));
-        }
+        }*/
     }
     
     
