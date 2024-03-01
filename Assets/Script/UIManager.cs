@@ -26,7 +26,11 @@ public class UIManager : MonoBehaviour
 
     void UpdateInteractHint(Vector3 pos,bool show)
     {
-        inWorldHint.transform.position = pos;
-        inWorldHint.SetActive(show);
+        if (inWorldHint)
+        {
+            inWorldHint.transform.position = pos;
+            inWorldHint.SetActive(show);
+        }
+        
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -14,15 +15,21 @@ public class GameManager : MonoSingleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        
+        GridSystem.Instance.InitializeGrid();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.R))
+        { //ReloadScene();
+        }
     }
 
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene("TutorialLevel");
+    }
     protected override void Init()
     {
         base.Init();

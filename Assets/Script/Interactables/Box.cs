@@ -74,6 +74,7 @@ public class Box : Interactable
         // TODO: will be replaced with other methods
         EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
         EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
-        Destroy(gameObject);
+        yield return new WaitForSeconds(0.2f);
+        //Destroy(gameObject);
     }
 }
