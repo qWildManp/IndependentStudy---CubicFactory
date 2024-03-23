@@ -39,10 +39,10 @@ public class GridSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitializeGrid();
+        //InitializeGrid();
     }
 
-    void InitializeGrid()
+    public void InitializeGrid()
     {
         gridArray = new GridCell[rows, columns];
         boxMovingTarget = new bool[rows, columns];

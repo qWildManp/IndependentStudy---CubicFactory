@@ -13,6 +13,11 @@ public class UIManager : MonoBehaviour
         EventBus.AddListener<Vector3,bool>(EventTypes.ShowInteractHint,UpdateInteractHint);
     }
 
+    private void OnDestroy()
+    {
+        EventBus.RemoveListener<Vector3,bool>(EventTypes.ShowInteractHint,UpdateInteractHint);
+    }
+
     void Start()
     {
         
@@ -26,7 +31,11 @@ public class UIManager : MonoBehaviour
 
     void UpdateInteractHint(Vector3 pos,bool show)
     {
-        inWorldHint.transform.position = pos;
-        inWorldHint.SetActive(show);
+        if (inWorldHint)
+        {
+            inWorldHint.transform.position = pos;
+            inWorldHint.SetActive(show);
+        }
+        
     }
 }
