@@ -152,6 +152,8 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+            //Debug.Log("Add Player Listener"); 
+            EventBus.AddListener<bool>(EventTypes.DisableInteraction, ChangeInteractStatus);
         }
 
         private void Start()
@@ -172,8 +174,13 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+           
+        }
 
-            EventBus.AddListener<bool>(EventTypes.DisableInteraction, ChangeInteractStatus);
+        private void OnDestroy()
+        {
+            Debug.Log("Destroy Player");
+            EventBus.RemoveListener<bool>(EventTypes.DisableInteraction,ChangeInteractStatus);
         }
 
         private void Update()

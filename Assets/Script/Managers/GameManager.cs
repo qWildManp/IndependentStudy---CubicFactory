@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -20,7 +22,10 @@ public class GameManager : MonoSingleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     protected override void Init()
@@ -28,6 +33,13 @@ public class GameManager : MonoSingleton<GameManager>
         base.Init();
         EventBus.AddListener<Box>(EventTypes.RegisterPlayerInteractBox,SetPlayerAttachBox);
         EventBus.AddListener(EventTypes.ClearPlayerInteractBox,ClearPlayerAttachBox);
+        GridSystem.Instance.InitializeGrid();
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.RemoveListener<Box>(EventTypes.RegisterPlayerInteractBox,SetPlayerAttachBox);
+        EventBus.RemoveListener(EventTypes.ClearPlayerInteractBox,ClearPlayerAttachBox);
     }
 
     private void SetPlayerAttachBox(Box interactBox)// set player attached Box

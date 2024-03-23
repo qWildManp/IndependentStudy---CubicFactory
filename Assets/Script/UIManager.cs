@@ -13,6 +13,11 @@ public class UIManager : MonoBehaviour
         EventBus.AddListener<Vector3,bool>(EventTypes.ShowInteractHint,UpdateInteractHint);
     }
 
+    private void OnDestroy()
+    {
+        EventBus.RemoveListener<Vector3,bool>(EventTypes.ShowInteractHint,UpdateInteractHint);
+    }
+
     void Start()
     {
         

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,12 @@ public class CamRootRotation : MonoBehaviour
     {
         EventBus.AddListener(EventTypes.CamRootClockWiseRotate,ClockWiseRotation);
         EventBus.AddListener(EventTypes.CamRootCounterClockWiseRotate,CounterClockWiseRotation);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.RemoveListener(EventTypes.CamRootClockWiseRotate,ClockWiseRotation);
+        EventBus.RemoveListener(EventTypes.CamRootCounterClockWiseRotate,CounterClockWiseRotation);
     }
 
     // Update is called once per frame

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,16 @@ public class Box : Interactable
     protected bool stopIsCaptured = false;
     protected bool isDisabled = false;
     public bool isMoving { get; private set; } // This variable is only for player moving box, belt movement is seperate
+
+    private void Awake()
+    {
+        EventBus.AddListener<int>(EventTypes.BoxMove, StopMovement);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.RemoveListener<int>(EventTypes.BoxMove, StopMovement);
+    }
 
     private void Update()
     {
@@ -33,6 +44,7 @@ public class Box : Interactable
     /// <param name="dir"></param>
     public virtual bool Move(Direction dir)
     {
+        Debug.Log("Move");
         if (isMoving || isDisabled)
             return false;
         lastMoveIdentifier = moveIdentifier;
@@ -41,7 +53,6 @@ public class Box : Interactable
         if (GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y, dir, moveIdentifier++))
         {
             isMoving = true;
-            EventBus.AddListener<int>(EventTypes.BoxMove, StopMovement);
             return true;
         }
         return false;
@@ -54,7 +65,7 @@ public class Box : Interactable
         {
             stopIsCaptured = true;
             isMoving = false;
-            EventBus.RemoveListener<int>(EventTypes.BoxMove, StopMovement);
+            //EventBus.RemoveListener<int>(EventTypes.BoxMove, StopMovement);
             lastMoveIdentifier = -1;
         }
     }
