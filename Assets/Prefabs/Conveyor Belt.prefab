@@ -167,7 +167,7 @@ MonoBehaviour:
   beltDirection: 5
   isActive: 1
   arrowIndicator: {fileID: 1064998321161871432}
-  reattemptTime: 0.5
+  reattemptTime: 1.5
 --- !u!1001 &6093398112563606053
 PrefabInstance:
   m_ObjectHideFlags: 0

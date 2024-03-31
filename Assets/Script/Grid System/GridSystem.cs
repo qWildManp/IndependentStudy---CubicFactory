@@ -11,8 +11,8 @@ using UnityEngine;
 public class GridSystem : MonoBehaviour
 {
     public static GridSystem Instance { get; private set; }
-
-
+    public bool finishInit = false;
+    public Vector2Int playerGridInfo;
     public Vector3 gridOrigin;
     //public FloorDatabaseSO floorDatabase;
     //public ObjectsDatabaseSO objectDatabase;
@@ -25,6 +25,7 @@ public class GridSystem : MonoBehaviour
 
     private void Awake()
     {
+        finishInit = false;
         if (Instance == null)
         {
             Instance = this;
@@ -33,6 +34,23 @@ public class GridSystem : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if (finishInit)
+        {
+           Vector3 playerPos =  GameManager.Instance.player.transform.position;
+           Vector2Int newPlayerGridInfo = WorldToGridPosition(playerPos);
+           if (newPlayerGridInfo != playerGridInfo)
+           {
+               GridCell oldPlayerCell =  GetCell(playerGridInfo.x, playerGridInfo.y);
+               oldPlayerCell.Obj = null;
+           }
+           playerGridInfo = newPlayerGridInfo;
+           GridCell playerCell = GetCell(playerGridInfo.x, playerGridInfo.y);
+           playerCell.Obj = GameManager.Instance.player.gameObject;
         }
     }
 
@@ -83,6 +101,8 @@ public class GridSystem : MonoBehaviour
             }
           
         }
+
+        finishInit = true;
     }
 
     public GridCell GetCell(int row, int column)
@@ -202,7 +222,14 @@ public class GridSystem : MonoBehaviour
             return null;
         return foundBox;
     }
-
+    public GameObject GetObjectAbove(Vector2Int xy)
+    {
+        GridCell cell = GetCell(xy.x, xy.y);
+        if (cell.Obj)
+            return cell.Obj;
+        else
+            return null;
+    }
     // Move Begin Update
     // Update isMoving status and disconnect the object with the original cell
     public bool ObjectStartMoving(int row, int column, Direction dir, int i)
