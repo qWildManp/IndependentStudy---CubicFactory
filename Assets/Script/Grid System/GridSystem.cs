@@ -195,7 +195,12 @@ public class GridSystem : MonoBehaviour
     public Box GetBoxAbove(Vector2Int xy)
     {
         GridCell cell = GetCell(xy.x, xy.y);
-        return cell.Obj.GetComponent<Box>();
+        Box foundBox;
+        if (cell.Obj)
+            cell.Obj.TryGetComponent<Box>(out foundBox);
+        else
+            return null;
+        return foundBox;
     }
 
     // Move Begin Update
