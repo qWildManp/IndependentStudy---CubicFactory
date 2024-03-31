@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using StarterAssets;
 using UnityEngine;
 
 public class ConveyorBelt : Floor
@@ -13,7 +14,7 @@ public class ConveyorBelt : Floor
     [SerializeField]
     private SpriteRenderer arrowIndicator;
     [SerializeField]
-    private float reattemptTime = .5f;
+    private float reattemptTime = 2.5f;
     // After how long will belt try to move the box on it again
     private Coroutine beltRunning;
     private Coroutine arroeIndicating;
@@ -75,6 +76,14 @@ public class ConveyorBelt : Floor
         EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
     }
 
+    public void MovePlayer()
+    {
+        if (!isActive)
+        {
+            return;
+        }
+        
+    }
     public void EnableBelt()
     {
         isActive = true;
@@ -117,16 +126,26 @@ public class ConveyorBelt : Floor
         while (true)
         {
             Debug.Log("Check Has Box");
-            Box box = GridSystem.Instance.GetBoxAbove(gridPos);
-            if (box != null)
+            GameObject aboveObject = GridSystem.Instance.GetObjectAbove(gridPos);
+            Debug.Log("Above Object:"  + aboveObject);
+            if (aboveObject)
             {
-                MoveBox(box);
-                yield return reattemptWait;
+                Box box;
+                ThirdPersonController player;
+                aboveObject.TryGetComponent<Box>(out box);
+                aboveObject.TryGetComponent<ThirdPersonController>(out player);
+                if (box)
+                {
+                    MoveBox(box);
+                }else if (player)
+                {
+                    Debug.Log("Move Player");
+                }
+                
             }
-            else
-            {
-                yield return reattemptWait;
-            }
+            yield return  reattemptWait;
+            //Box box = GridSystem.Instance.GetBoxAbove(gridPos);
+            
         }
     }
 

@@ -44,7 +44,6 @@ public class Box : Interactable
     /// <param name="dir"></param>
     public virtual bool Move(Direction dir)
     {
-        Debug.Log("Move");
         if (isMoving || isDisabled)
             return false;
         lastMoveIdentifier = moveIdentifier;
