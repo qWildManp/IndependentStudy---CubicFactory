@@ -7,7 +7,6 @@ public enum EventTypes
     BoxMove,
     CamRootClockWiseRotate,
     CamRootCounterClockWiseRotate,
-    RegisterPlayerInteractBox,
     ClearPlayerInteractBox,
     ShowInteractHint,
     DisableInteraction,

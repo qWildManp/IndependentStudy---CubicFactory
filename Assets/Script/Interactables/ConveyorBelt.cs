@@ -56,7 +56,7 @@ public class ConveyorBelt : Floor
     // 1. Keep listening to information of item entering belt area
     // 2. Once event triggered, run Box.Move(), if it returns false, loop till its possible; if it returns true, continue waiting for the next box
 
-    public void MoveBox(Box box)
+    public void ConveyBox(Box box)
     {
         if (!isActive)
         {
@@ -70,9 +70,9 @@ public class ConveyorBelt : Floor
         {
            
         }*/
+        EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
         box.Move(beltDirection);
         // TODO: will be replaced with other methods
-        EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
         EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
     }
 
@@ -136,7 +136,7 @@ public class ConveyorBelt : Floor
                 aboveObject.TryGetComponent<ThirdPersonController>(out player);
                 if (box)
                 {
-                    MoveBox(box);
+                    ConveyBox(box);
                 }else if (player)
                 {
                     Debug.Log("Move Player");

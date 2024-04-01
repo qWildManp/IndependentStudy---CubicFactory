@@ -226,7 +226,7 @@ namespace StarterAssets
                 if (Vector3.Distance(transform.position + new Vector3(0, 0.5f, 0), hit.point) < 0.3f)
                 {
                     closeToBox = true;
-                    EventBus.Broadcast(EventTypes.RegisterPlayerInteractBox,hit.transform.GetComponent<Box>());
+                    GameManager.Instance.SetPlayerAttachBox(hit.transform.GetComponent<Box>());
                     EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),true);
                 }
             }
@@ -475,9 +475,6 @@ namespace StarterAssets
             
             if (Input.GetKeyDown(KeyCode.F)&&!beginInteract)//enter interact mode
             {
-                Debug.Log("Begin Interact");
-                Debug.Log("Player Gird Pos :" + playerGridPos);
-                Debug.Log("World Pos :" + GridSystem.Instance.GridToWorldPosition(playerGridPos));
                 Quaternion adjustRot = Quaternion.FromToRotation(transform.forward, new Vector3(playerBoxDir.x,0,playerBoxDir.y));
                 Vector3 adjustLoc = GridSystem.Instance.GridToWorldPosition(playerGridPos);
                 adjustLoc += new Vector3(playerBoxDir.x,0,playerBoxDir.y) * (GridSystem.Instance.cellSize/2 - _controller.radius);
@@ -494,10 +491,7 @@ namespace StarterAssets
 
             if (beginInteract)
             {
-                //Debug.Log("Cam Rotate Offset -> " + CamRotateAngle);
                 normalizeInput = RotateVector(_input.move, CamRotateAngle);
-                //Debug.Log("Player origin Input:" + _input.move);
-                //Debug.Log("Player normalize Input:" + normalizeInput);
                 if (playerBoxDir == normalizeInput)//push
                 {
                     if (!isInteracting)
@@ -566,6 +560,7 @@ namespace StarterAssets
             beginInteract = canInteract;
             canMove = !canInteract;
             _animator.SetBool(_animIDPushPose,beginInteract);
+            
         }
 
         private void ChangePushStatus(bool pushing)//change push anim status
