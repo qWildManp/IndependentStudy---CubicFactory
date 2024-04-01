@@ -39,19 +39,8 @@ public class GridSystem : MonoBehaviour
 
     private void Update()
     {
-        if (finishInit)
-        {
-           Vector3 playerPos =  GameManager.Instance.player.transform.position;
-           Vector2Int newPlayerGridInfo = WorldToGridPosition(playerPos);
-           if (newPlayerGridInfo != playerGridInfo)
-           {
-               GridCell oldPlayerCell =  GetCell(playerGridInfo.x, playerGridInfo.y);
-               oldPlayerCell.Obj = null;
-           }
-           playerGridInfo = newPlayerGridInfo;
-           GridCell playerCell = GetCell(playerGridInfo.x, playerGridInfo.y);
-           playerCell.Obj = GameManager.Instance.player.gameObject;
-        }
+        
+        
     }
 
     // Start is called before the first frame update
@@ -60,6 +49,22 @@ public class GridSystem : MonoBehaviour
         //InitializeGrid();
     }
 
+    public void UpdatePlayerGridInfo()
+    {
+        if (finishInit)
+        {
+            Vector3 playerPos =  GameManager.Instance.player.transform.position;
+            Vector2Int newPlayerGridInfo = WorldToGridPosition(playerPos);
+            if (newPlayerGridInfo != playerGridInfo)
+            {
+                GridCell oldPlayerCell =  GetCell(playerGridInfo.x, playerGridInfo.y);
+                oldPlayerCell.Obj = null;
+            }
+            playerGridInfo = newPlayerGridInfo;
+            GridCell playerCell = GetCell(playerGridInfo.x, playerGridInfo.y);
+            playerCell.Obj = GameManager.Instance.player.gameObject;
+        }
+    }
     public void InitializeGrid()
     {
         gridArray = new GridCell[rows, columns];
@@ -276,7 +281,7 @@ public class GridSystem : MonoBehaviour
             // Once everything is registered, send signal to conveyor belts
             if (cell.Floor != null && cell.Floor.GetComponent<Floor>().itemID == FloorID.ConveyorBelt)
             {
-                cell.Floor.GetComponent<ConveyorBelt>().MoveBox(obj.GetComponent<Box>());
+                cell.Floor.GetComponent<ConveyorBelt>().ConveyBox(obj.GetComponent<Box>());
             }
         };
     }
