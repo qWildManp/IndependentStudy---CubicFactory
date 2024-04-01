@@ -59,8 +59,6 @@ namespace StarterAssets
         public bool isInteracting = false;
         public bool beginInteract = false;
         public bool canMove = true;
-        //detect if player can interact with box
-        [SerializeField] private bool closeToBox;
 
         [Tooltip("Useful for rough ground")]
         public float GroundedOffset = -0.14f;
@@ -146,7 +144,6 @@ namespace StarterAssets
             canMove = true;
             beginInteract = false;
             isInteracting = false;
-            closeToBox = false;
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -225,17 +222,17 @@ namespace StarterAssets
             {
                 if (Vector3.Distance(transform.position + new Vector3(0, 0.5f, 0), hit.point) < 0.3f)
                 {
-                    closeToBox = true;
-                    GameManager.Instance.SetPlayerAttachBox(hit.transform.GetComponent<Box>());
-                    EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),true);
+                    if(GameManager.Instance.SetPlayerAttachBox(hit.transform.GetComponent<Box>()))
+                    {
+                       EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),true); 
+                    }
+                    
                 }
             }
             else
             {
-                closeToBox = false;
                 beginInteract = false;
                 EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
-                EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
             }
         }
         private void GroundedCheck()
@@ -460,13 +457,13 @@ namespace StarterAssets
 
         private void InteractWithBox()
         {
-            if (!closeToBox||!Grounded||GameManager.Instance.camRoot.isRotating)// if mouse is not close to box or in the air or cam is rotating
+            Box attachedBox = GameManager.Instance.GetPlayerAttachedBox();
+            if (!attachedBox||!Grounded||GameManager.Instance.camRoot.isRotating)// if mouse is not close to box or in the air or cam is rotating
             {
                 return;
             }
             
             Vector2Int playerGridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
-            Box attachedBox = GameManager.Instance.GetPlayerAttachedBox();
             Vector2Int attachBoxGridPos = GridSystem.Instance.WorldToGridPosition(attachedBox.transform.position);
             //Debug.Log("Box Grid loc :" + attachBoxGridPos);
             Vector2 playerBoxDir = (attachBoxGridPos - playerGridPos);

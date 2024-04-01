@@ -10,7 +10,6 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] public ThirdPersonController player;
 
     [SerializeField] private Box playerAttachBox;
-    [SerializeField] private Box playerInteractingBox;
     
     [SerializeField] public CamRootRotation camRoot;
     
@@ -44,14 +43,23 @@ public class GameManager : MonoSingleton<GameManager>
         EventBus.RemoveListener(EventTypes.ClearPlayerInteractBox,ClearPlayerAttachBox);
     }
 
-    public void SetPlayerAttachBox(Box interactBox)// set player attached Box
+    public bool SetPlayerAttachBox(Box interactBox)// set player attached Box
     {
-        this.playerAttachBox = interactBox;
+        if (interactBox == this.playerAttachBox)
+        {
+            return false;
+        }
+        else
+        {
+            this.playerAttachBox = interactBox;
+            return true;
+        }
+        
     }
     public void ClearPlayerAttachBox()
     {
         this.playerAttachBox = null;
-        this.playerInteractingBox = null;
+        EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
     }
 
     public Box GetPlayerAttachedBox()// Get player attached Box
