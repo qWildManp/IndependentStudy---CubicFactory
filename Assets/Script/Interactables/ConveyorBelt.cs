@@ -16,18 +16,7 @@ public class ConveyorBelt : Floor
     // After how long will belt try to move the box on it again
     private Coroutine beltRunning;
     private Coroutine arroeIndicating;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            EnableBelt();
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            DisableBelt();
-        }
-    }
+    
 
     private void Start()
     {
