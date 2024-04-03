@@ -23,6 +23,8 @@ public class GridSystem : MonoBehaviour
     public GridCell[,] gridArray;
     private bool[,] boxMovingTarget; // Controls whether the cell in the system is currently null, but will be receiving a box soon. If so, no more boxes should be allowed to move into the place.
 
+    private List<Floor> electrifiedFloor;
+
     private void Awake()
     {
         finishInit = false;
@@ -285,8 +287,73 @@ public class GridSystem : MonoBehaviour
             }
         };
     }
-    
+
+    //Electrify all the floors connected to the battery
+    public void CheckForElectricityRoute(Vector2Int pos)
+    {
+        if (electrifiedFloor == null)
+        {
+            electrifiedFloor = new();
+        } else
+        {
+            // First stop electricity in all previous floors
+            foreach (Floor f in electrifiedFloor)
+            {
+                f.StopElectrify();
+            }
+            electrifiedFloor.Clear();
+        }
 
 
+        // Loop through all potentials
+        Queue<Vector2Int> q = new();
+        HashSet<Vector2> visited = new();
+        q.Enqueue(pos);
+        while (q.Count > 0)
+        {
+            Vector2Int p = q.Dequeue();
+            if (gridArray[p.x, p.y].Floor != null)
+            {
+                Floor f = gridArray[p.x, p.y].Floor.GetComponent<Floor>();
+                if (f.Electrify())
+                {
+                    electrifiedFloor.Add(f);
 
+                    List<Vector2Int> l = GetNeighbors(p);
+                    foreach(Vector2Int l2 in l)
+                    {
+                        if (!visited.Contains(l2))
+                            q.Enqueue((Vector2Int)l2);
+                    }
+                }
+            }
+            visited.Add(p);
+        }
+    }
+
+    // x-1,x+1,y-1,y+1
+    public List<Vector2Int> GetNeighbors(Vector2Int pos)
+    {
+        List<Vector2Int> neighbor = new()
+        {
+            // Right
+            new Vector2Int(pos.x + 1, pos.y),
+            // Left
+            new Vector2Int(pos.x - 1, pos.y),
+            // Up
+            new Vector2Int(pos.x, pos.y + 1),
+            // Down
+            new Vector2Int(pos.x, pos.y - 1)
+        };
+        for (int i = 0; i < neighbor.Count; i++)
+        {
+            if (neighbor[i].x < 0 || neighbor[i].x >= rows || neighbor[i].y < 0 || neighbor[i].y >= columns)
+            {
+                neighbor.RemoveAt(i);
+                i--;
+            }
+        }
+
+        return neighbor;
+    }
 }

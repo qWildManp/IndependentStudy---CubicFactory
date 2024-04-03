@@ -229,8 +229,8 @@ MonoBehaviour:
   itemID: 2
   BatteryIndicator: {fileID: 1576184470531456996}
   maxIndicatorScaleY: 1.8
-  dischargePerSecond: 0.05
-  chargePerSecond: 0.2
+  dischargePerSecond: 0
+  chargePerSecond: 1
 --- !u!1 &7509807368522961725
 GameObject:
   m_ObjectHideFlags: 0

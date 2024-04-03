@@ -6,7 +6,7 @@ public class Battery : Box
 {
     public Transform BatteryIndicator;
     public float maxIndicatorScaleY = 1.8f;
-    private float charge = 0; // The current amount of electricity inside battery, will decay overtime if connected to items
+    private float charge = 1; // The current amount of electricity inside battery, will decay overtime if connected to items
     [SerializeField]
     private float dischargePerSecond = .05f; // Battery amount -change per second
     [SerializeField]
@@ -74,8 +74,18 @@ public class Battery : Box
                 isCharging = true;
             }
             stopIsCaptured = false;
+
+            Electrify();
         }
     }
 
-
+    // Everytime battery is moved, detect again
+    private void Electrify()
+    {
+        if (charge > 0)
+        {
+            Vector2Int pos = GridSystem.Instance.WorldToGridPosition(transform.position);
+            GridSystem.Instance.CheckForElectricityRoute(pos);
+        }
+    }
 }
