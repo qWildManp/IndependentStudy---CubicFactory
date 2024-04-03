@@ -121,3 +121,4 @@ MonoBehaviour:
   itemName: Floor
   itemID: 1
   isAccessible: 1
+  hasWireProperties: 0
