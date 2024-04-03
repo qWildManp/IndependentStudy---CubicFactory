@@ -103,10 +103,12 @@ public class ConveyorBelt : Floor
     public void DisableBelt()
     {
         isElectrified = false;
-        StopCoroutine(arroeIndicating);
+        if(arroeIndicating != null)
+            StopCoroutine(arroeIndicating);
         arrowIndicator.DOFade(1, 3f);
         arrowIndicator.color = new Color(0.5f, 0.11f, 0.08f);
-        StopCoroutine(beltRunning);
+        if (beltRunning != null)
+            StopCoroutine(beltRunning);
     }
 
     private IEnumerator ActivateArrowEffectCor()
