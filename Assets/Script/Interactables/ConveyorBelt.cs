@@ -10,8 +10,6 @@ public class ConveyorBelt : Floor
     [SerializeField]
     private Direction beltDirection;
     [SerializeField]
-    private bool isActive = false;
-    [SerializeField]
     private SpriteRenderer arrowIndicator;
     [SerializeField]
     private float reattemptTime = 2.5f;
