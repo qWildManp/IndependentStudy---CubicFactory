@@ -10,24 +10,15 @@ public class ConveyorBelt : Floor
     [SerializeField]
     private Direction beltDirection;
     [SerializeField]
+    private bool isActive = false;
+    [SerializeField]
     private SpriteRenderer arrowIndicator;
     [SerializeField]
     private float reattemptTime = 2.5f;
     // After how long will belt try to move the box on it again
     private Coroutine beltRunning;
     private Coroutine arroeIndicating;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            EnableBelt();
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            DisableBelt();
-        }
-    }
+    
 
     private void Start()
     {
