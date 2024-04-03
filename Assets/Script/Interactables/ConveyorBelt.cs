@@ -10,8 +10,6 @@ public class ConveyorBelt : Floor
     [SerializeField]
     private Direction beltDirection;
     [SerializeField]
-    private bool isActive = true;
-    [SerializeField]
     private SpriteRenderer arrowIndicator;
     [SerializeField]
     private float reattemptTime = 2.5f;
@@ -33,8 +31,6 @@ public class ConveyorBelt : Floor
 
     private void Start()
     {
-        if(isActive)
-            EnableBelt();
         // TODO: will be replaced when art asset is present
         switch (beltDirection)
         {
@@ -58,7 +54,7 @@ public class ConveyorBelt : Floor
 
     public void ConveyBox(Box box)
     {
-        if (!isActive)
+        if (!isElectrified)
         {
             return;
         }
@@ -78,15 +74,31 @@ public class ConveyorBelt : Floor
 
     public void MovePlayer()
     {
-        if (!isActive)
+        if (!isElectrified)
         {
             return;
         }
         
     }
+
+    public override bool Electrify()
+    {
+        if (hasWireProperties)
+        {
+            EnableBelt();
+            return true;
+        }
+        return false;
+    }
+
+    public override void StopElectrify()
+    {
+        DisableBelt();
+    }
+
     public void EnableBelt()
     {
-        isActive = true;
+        isElectrified = true;
         arrowIndicator.color = new Color(0.09f, 0.68f, 0.09f);
         beltRunning =  StartCoroutine(ActivateArrowEffectCor());
         arroeIndicating = StartCoroutine(RunningBeltCor());
@@ -101,7 +113,7 @@ public class ConveyorBelt : Floor
     
     public void DisableBelt()
     {
-        isActive = false;
+        isElectrified = false;
         StopCoroutine(arroeIndicating);
         arrowIndicator.DOFade(1, 3f);
         arrowIndicator.color = new Color(0.5f, 0.11f, 0.08f);

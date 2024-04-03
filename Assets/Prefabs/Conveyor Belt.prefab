@@ -164,8 +164,8 @@ MonoBehaviour:
   itemName: ConveyorBelt
   itemID: 2
   isAccessible: 1
+  hasWireProperties: 1
   beltDirection: 5
-  isActive: 1
   arrowIndicator: {fileID: 1064998321161871432}
   reattemptTime: 1.5
 --- !u!1001 &6093398112563606053

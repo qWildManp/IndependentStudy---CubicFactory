@@ -15,8 +15,8 @@ public class Floor : Interactable
     // The following variables are used for examining electricity flow
     [SerializeField]
     [Tooltip("Whether this floor will be affected by battery above, or floor with electricity nearby")]
-    private bool hasWireProperties;
-    public bool isElectrified; // Property to check if this unit have electricty
+    protected bool hasWireProperties;
+    protected bool isElectrified; // Property to check if this unit have electricty
 
     private BoxCollider boxCollider;
 
@@ -62,7 +62,7 @@ public class Floor : Interactable
         return isCharger;
     }
 
-    public bool Electrify()
+    public virtual bool Electrify()
     {
         if (hasWireProperties)
         {
@@ -72,7 +72,7 @@ public class Floor : Interactable
         return false;
     }
 
-    public void StopElectrify()
+    public virtual void StopElectrify()
     {
         isElectrified = false;
     }
