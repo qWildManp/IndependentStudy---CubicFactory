@@ -82,7 +82,7 @@ public class GridSystem : MonoBehaviour
 
         // Find all objects tagged as "Floor" or "Box"
         GameObject[] floors = GameObject.FindGameObjectsWithTag("Floor");
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Box");
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("DynamicObject");
 
         // Load floors
         foreach (var floor in floors)
@@ -280,11 +280,6 @@ public class GridSystem : MonoBehaviour
                 }
             }
             cell.Obj = obj;
-            // Once everything is registered, send signal to conveyor belts
-            if (cell.Floor != null && cell.Floor.GetComponent<Floor>().itemID == FloorID.ConveyorBelt)
-            {
-                cell.Floor.GetComponent<ConveyorBelt>().ConveyBox(obj.GetComponent<Box>());
-            }
         };
     }
 

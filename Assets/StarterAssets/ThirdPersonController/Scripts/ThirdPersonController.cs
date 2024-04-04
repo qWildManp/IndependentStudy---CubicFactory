@@ -218,7 +218,7 @@ namespace StarterAssets
             LayerMask raycastLayer = LayerMask.GetMask("Interactable");
             Vector3 playerFacing = transform.forward;
             Ray castingRay = new Ray(transform.position + new Vector3(0,0.5f,0), playerFacing);
-            if (Physics.Raycast(castingRay, out hit,raycastLayer)&&hit.transform.CompareTag("Box"))
+            if (Physics.Raycast(castingRay, out hit,raycastLayer)&&hit.transform.GetComponent<Box>())// hit box
             {
                 if (Vector3.Distance(transform.position + new Vector3(0, 0.5f, 0), hit.point) < 0.3f)
                 {

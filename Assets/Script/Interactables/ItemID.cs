@@ -13,4 +13,5 @@ public enum BoxID
     Debug = -1,
     Box = 1,
     Battery = 2,
+    NotPushable
 }

@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 8284801365860811367}
   m_Layer: 6
   m_Name: Battery
-  m_TagString: Box
+  m_TagString: DynamicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -229,6 +229,7 @@ MonoBehaviour:
   itemID: 2
   BatteryIndicator: {fileID: 1576184470531456996}
   maxIndicatorScaleY: 1.8
+  charge: 100
   dischargePerSecond: 0
   chargePerSecond: 1
 --- !u!1 &7509807368522961725

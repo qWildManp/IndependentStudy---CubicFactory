@@ -6,7 +6,7 @@ public class Battery : Box
 {
     public Transform BatteryIndicator;
     public float maxIndicatorScaleY = 1.8f;
-    private float charge = 1; // The current amount of electricity inside battery, will decay overtime if connected to items
+    [SerializeField]private float charge = 1; // The current amount of electricity inside battery, will decay overtime if connected to items
     [SerializeField]
     private float dischargePerSecond = .05f; // Battery amount -change per second
     [SerializeField]
