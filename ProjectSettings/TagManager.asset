@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - CinemachineTarget
   - Box
+  - DynamicObject
   layers:
   - Default
   - TransparentFX

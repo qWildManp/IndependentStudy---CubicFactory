@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Floor : Interactable
+public class Floor : MonoBehaviour
 {
     public FloorID itemID;
     [SerializeField]
@@ -15,8 +15,8 @@ public class Floor : Interactable
     // The following variables are used for examining electricity flow
     [SerializeField]
     [Tooltip("Whether this floor will be affected by battery above, or floor with electricity nearby")]
-    protected bool hasWireProperties;
-    protected bool isElectrified; // Property to check if this unit have electricty
+    protected bool canElectrified;
+    [SerializeField] protected bool isElectrified; // Property to check if this unit have electricty
 
     private BoxCollider boxCollider;
 
@@ -64,7 +64,7 @@ public class Floor : Interactable
 
     public virtual bool Electrify()
     {
-        if (hasWireProperties)
+        if (canElectrified)
         {
             isElectrified = true;
             return true;

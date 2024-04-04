@@ -6,21 +6,7 @@ using UnityEngine;
 public class Box : Interactable
 {
     public BoxID itemID;
-    protected static int moveIdentifier = 0;
-    protected int lastMoveIdentifier = -1;
-    protected bool stopIsCaptured = false;
-    protected bool isDisabled = false;
-    public bool isMoving { get; private set; } // This variable is only for player moving box, belt movement is seperate
-
-    private void Awake()
-    {
-        EventBus.AddListener<int>(EventTypes.BoxMove, StopMovement);
-    }
-
-    private void OnDestroy()
-    {
-        EventBus.RemoveListener<int>(EventTypes.BoxMove, StopMovement);
-    }
+   
 
     private void Update()
     {
@@ -37,37 +23,8 @@ public class Box : Interactable
             }
         }
     }
-
-    /// <summary>
-    /// Player resulted box movements
-    /// </summary>
-    /// <param name="dir"></param>
-    public virtual bool Move(Direction dir)
-    {
-        if (isMoving || isDisabled)
-            return false;
-        lastMoveIdentifier = moveIdentifier;
-        Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
-        //Debug.Log(moveIdentifier);
-        if (GridSystem.Instance.ObjectStartMoving(gridPos.x, gridPos.y, dir, moveIdentifier++))
-        {
-            isMoving = true;
-            return true;
-        }
-        return false;
-        
-    }
-
-    protected virtual void StopMovement(int i)
-    {
-        if (i == lastMoveIdentifier)
-        {
-            stopIsCaptured = true;
-            isMoving = false;
-            //EventBus.RemoveListener<int>(EventTypes.BoxMove, StopMovement);
-            lastMoveIdentifier = -1;
-        }
-    }
+    
+    
 
     // Box disappear after falling into pit
     public IEnumerator BoxFallInPit()

@@ -21,6 +21,14 @@ public class ConveyorBelt : Floor
     private void Start()
     {
         // TODO: will be replaced when art asset is present
+        if (isElectrified)
+        {
+            Electrify();
+        }
+        else
+        {
+            StopElectrify();
+        }
         switch (beltDirection)
         {
             case Direction.N:
@@ -41,7 +49,7 @@ public class ConveyorBelt : Floor
     // 1. Keep listening to information of item entering belt area
     // 2. Once event triggered, run Box.Move(), if it returns false, loop till its possible; if it returns true, continue waiting for the next box
 
-    public void ConveyBox(Box box)
+    public void ConveyObject(Interactable interactableObject)
     {
         if (!isElectrified)
         {
@@ -56,7 +64,7 @@ public class ConveyorBelt : Floor
            
         }*/
         EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
-        box.Move(beltDirection);
+        interactableObject.Move(beltDirection);
         // TODO: will be replaced with other methods
         EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
     }
@@ -72,7 +80,7 @@ public class ConveyorBelt : Floor
 
     public override bool Electrify()
     {
-        if (hasWireProperties)
+        if (canElectrified)
         {
             EnableBelt();
             return true;
@@ -91,13 +99,6 @@ public class ConveyorBelt : Floor
         arrowIndicator.color = new Color(0.09f, 0.68f, 0.09f);
         beltRunning =  StartCoroutine(ActivateArrowEffectCor());
         arroeIndicating = StartCoroutine(RunningBeltCor());
-        /*
-        Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
-        Box box = GridSystem.Instance.GetBoxAbove(gridPos);
-        if (box != null)
-        {
-            MoveBox(box);
-        }*/
     }
     
     public void DisableBelt()
@@ -128,18 +129,18 @@ public class ConveyorBelt : Floor
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
         while (true)
         {
-            Debug.Log("Check Has Box");
+            //Debug.Log("Check Has Box");
             GameObject aboveObject = GridSystem.Instance.GetObjectAbove(gridPos);
-            Debug.Log("Above Object:"  + aboveObject);
+            //Debug.Log("Above Object:"  + aboveObject);
             if (aboveObject)
             {
-                Box box;
+                Interactable interactableObject;
                 ThirdPersonController player;
-                aboveObject.TryGetComponent<Box>(out box);
+                aboveObject.TryGetComponent<Interactable>(out interactableObject);
                 aboveObject.TryGetComponent<ThirdPersonController>(out player);
-                if (box)
+                if (interactableObject)
                 {
-                    ConveyBox(box);
+                    ConveyObject(interactableObject);
                 }else if (player)
                 {
                     Debug.Log("Move Player");
@@ -150,14 +151,5 @@ public class ConveyorBelt : Floor
             //Box box = GridSystem.Instance.GetBoxAbove(gridPos);
             
         }
-    }
-
-    private IEnumerator ReattemptMoveBox(Box box)
-    {
-        do
-        {
-            yield return new WaitForSeconds(reattemptTime);
-        }
-        while (!box.Move(beltDirection));
     }
 }
