@@ -12813,6 +12813,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Conveyor Belt (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3478308998260909167, guid: 8c9cda72c0d339b4c95ed5efcb0427a9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7872360217741705058, guid: 8c9cda72c0d339b4c95ed5efcb0427a9,
         type: 3}
       propertyPath: beltDirection

@@ -18,6 +18,8 @@ public abstract class Interactable : MonoBehaviour
 
     private void OnDestroy()
     {
+        Vector2Int objectGridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+        GridSystem.Instance.ClearCellObjectData(objectGridPos.x, objectGridPos.y);
         EventBus.RemoveListener<int>(EventTypes.ObjectMove, StopMovement);
     }
     /// <summary>

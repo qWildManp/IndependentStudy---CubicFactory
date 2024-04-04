@@ -55,21 +55,13 @@ public class ConveyorBelt : Floor
         {
             return;
         }
-        // In case box refuse to move, try every 
-        /*if (!box.Move(beltDirection))
-        {
-            //StartCoroutine(ReattemptMoveBox(box));
-        } else
-        {
-           
-        }*/
         EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
         interactableObject.Move(beltDirection);
         // TODO: will be replaced with other methods
         EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
     }
 
-    public void MovePlayer()
+    public void MovePlayer()//TBD
     {
         if (!isElectrified)
         {
