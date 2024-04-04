@@ -38,19 +38,9 @@ public class GridSystem : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Update()
-    {
-        
-        
-    }
+    
 
     // Start is called before the first frame update
-    void Start()
-    {
-        //InitializeGrid();
-    }
-
     public void UpdatePlayerGridInfo()
     {
         if (finishInit)
@@ -121,6 +111,23 @@ public class GridSystem : MonoBehaviour
         return null; // Out of bounds
     }
 
+    public bool ClearCellObjectData(int row, int column)
+    {
+        if (row >= 0 && row < rows && column >= 0 && column < columns)
+        {
+            gridArray[row, column].Obj = null;
+            if (GetCell(row, column) != null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     // Map world position to the gridPos
     public Vector2Int WorldToGridPosition(Vector3 worldPosition)
     {

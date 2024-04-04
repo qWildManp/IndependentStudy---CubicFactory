@@ -21,4 +21,5 @@ public class Collectable : Interactable
         if(other.CompareTag("Player"))
             Destroy(gameObject);
     }
+    
 }
