@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Script.Objects;
 using UnityEngine;
 
-public class ConveyorController : MonoBehaviour
+public class ConveyorController : ControllerObjectBase
 {
     public ConveyorBelt[] controlledConveyorBelts;
-
-    public bool activated;
+    
     // Start is called before the first frame update
     void Start()
     {
         if (activated)
         {
-            ActivateBelt();
+            Activate();
         }
         Debug.Log(controlledConveyorBelts.Length);
     }
 
-    public void ActivateBelt()
+    public override void Activate()
     {
         activated = true;
         foreach (var belt in controlledConveyorBelts)
@@ -25,7 +25,7 @@ public class ConveyorController : MonoBehaviour
             belt.EnableBelt();
         }
     }
-    public void Deactivate()
+    public override void Deactivate()
     {
         activated = false;
         foreach (var belt in controlledConveyorBelts)
@@ -38,7 +38,7 @@ public class ConveyorController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ActivateBelt();
+            Activate();
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {

@@ -6,6 +6,7 @@ public enum FloorID
     Wall = 4,
     ChargingStation = 5,
     Wire = 6,
+    PowerBase = 7,
 }
 
 public enum BoxID

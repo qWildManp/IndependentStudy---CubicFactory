@@ -89,8 +89,8 @@ public class ConveyorBelt : Floor
     {
         isElectrified = true;
         arrowIndicator.color = new Color(0.09f, 0.68f, 0.09f);
-        beltRunning =  StartCoroutine(ActivateArrowEffectCor());
-        arroeIndicating = StartCoroutine(RunningBeltCor());
+        arroeIndicating =  StartCoroutine(ActivateArrowEffectCor());
+        beltRunning = StartCoroutine(RunningBeltCor());
     }
     
     public void DisableBelt()
