@@ -31,16 +31,15 @@ public class GameManager : MonoSingleton<GameManager>
     protected override void Init()
     {
         base.Init();
-        //EventBus.AddListener<Box>(EventTypes.RegisterPlayerAttachedBox,SetPlayerAttachBox);
-        //EventBus.AddListener<Box>(EventTypes.RegisterPlayerInteractingBox,SetPlayerAttachBox);
         EventBus.AddListener(EventTypes.ClearPlayerInteractBox,ClearPlayerAttachBox);
+        EventBus.AddListener<Box>(EventTypes.RemovePlayerInteractingBox,RemoveInteractingBox);
         GridSystem.Instance.InitializeGrid();
     }
 
     private void OnDestroy()
     {
-        //EventBus.RemoveListener<Box>(EventTypes.RegisterPlayerAttachedBox,SetPlayerAttachBox);
         EventBus.RemoveListener(EventTypes.ClearPlayerInteractBox,ClearPlayerAttachBox);
+        EventBus.RemoveListener<Box>(EventTypes.RemovePlayerInteractingBox,RemoveInteractingBox);
     }
 
     public bool SetPlayerAttachBox(Box interactBox)// set player attached Box
@@ -58,10 +57,21 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void ClearPlayerAttachBox()
     {
-        this.playerAttachBox = null;
-        EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
+        
+            this.playerAttachBox = null;
+            EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
+        
     }
 
+    public void RemoveInteractingBox(Box interactingBox)
+    {
+        if (playerAttachBox == interactingBox)
+        {
+            this.playerAttachBox = null;
+            EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
+            EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
+        }
+    }
     public Box GetPlayerAttachedBox()// Get player attached Box
     {
         return playerAttachBox;

@@ -55,10 +55,15 @@ public class ConveyorBelt : Floor
         {
             return;
         }
-        EventBus.Broadcast(EventTypes.ClearPlayerInteractBox);
+
+        if (interactableObject.GetComponent<Box>())
+        {
+             EventBus.Broadcast(EventTypes.RemovePlayerInteractingBox,interactableObject.GetComponent<Box>());
+        }
+       
         interactableObject.Move(beltDirection);
         // TODO: will be replaced with other methods
-        EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
+       
     }
 
     public void MovePlayer()//TBD
