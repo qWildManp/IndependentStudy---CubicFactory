@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Cheese
-  rotateSpeed: 4
+  rotateSpeed: 10
 --- !u!1001 &746206052584136880
 PrefabInstance:
   m_ObjectHideFlags: 0
