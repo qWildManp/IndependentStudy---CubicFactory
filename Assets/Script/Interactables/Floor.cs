@@ -20,8 +20,17 @@ public class Floor : MonoBehaviour
 
     private BoxCollider boxCollider;
 
+    private GameObject electrifyEffect;
+    private GameObject blockingCollider;
+
     private void Start()
     {
+        if (canElectrified)
+        {
+            electrifyEffect = transform.Find("Electrify").gameObject;
+            blockingCollider = transform.Find("Collider").gameObject;
+        }
+
         boxCollider = GetComponent<BoxCollider>();
         // TODO: Temporary solution for setting properties
         if (itemID == FloorID.ChargingStation)
@@ -67,6 +76,11 @@ public class Floor : MonoBehaviour
         if (canElectrified)
         {
             isElectrified = true;
+            // Enable visual effects
+            electrifyEffect.SetActive(true);
+            // TODO: Disable player from walking into
+            blockingCollider.SetActive(true);
+
             return true;
         }
         return false;
@@ -74,6 +88,8 @@ public class Floor : MonoBehaviour
 
     public virtual void StopElectrify()
     {
+        electrifyEffect.SetActive(false);
+        blockingCollider.SetActive(false);
         isElectrified = false;
     }
 
