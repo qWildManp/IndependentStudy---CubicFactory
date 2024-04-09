@@ -77,9 +77,11 @@ public class Floor : MonoBehaviour
         {
             isElectrified = true;
             // Enable visual effects
-            electrifyEffect.SetActive(true);
+            if (electrifyEffect != null)
+                electrifyEffect.SetActive(true);
             // TODO: Disable player from walking into
-            blockingCollider.SetActive(true);
+            if (blockingCollider != null)
+                blockingCollider.SetActive(true);
 
             return true;
         }
@@ -88,8 +90,10 @@ public class Floor : MonoBehaviour
 
     public virtual void StopElectrify()
     {
-        electrifyEffect.SetActive(false);
-        blockingCollider.SetActive(false);
+        if (electrifyEffect != null)
+            electrifyEffect.SetActive(false);
+        if (blockingCollider != null)
+            blockingCollider.SetActive(false);
         isElectrified = false;
     }
 
