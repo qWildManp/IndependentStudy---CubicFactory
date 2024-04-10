@@ -6,7 +6,9 @@ using UnityEngine;
 public class Box : Interactable
 {
     public BoxID itemID;
-   
+    [SerializeField]
+    [Tooltip("Box itself doesn't have conductivity, this boolean controls the behavior of the floor generated while the box fill a hole")]
+    protected bool canElectrify = false;
 
     private void Update()
     {
@@ -43,5 +45,10 @@ public class Box : Interactable
         EventBus.Broadcast<bool>(EventTypes.DisableInteraction, false);
         yield return new WaitForSeconds(0.2f);
         //Destroy(gameObject);
+    }
+
+    public bool GetCanElectrify()
+    {
+        return canElectrify;
     }
 }

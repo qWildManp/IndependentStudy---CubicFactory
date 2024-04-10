@@ -281,7 +281,7 @@ public class GridSystem : MonoBehaviour
                 Floor cur = cell.Floor.GetComponent<Floor>();
                 if (cur.GetIsHole())
                 {
-                    cur.SetFilledUp();
+                    cur.SetFilledUp(obj.GetComponent<Box>().GetCanElectrify());
                     StartCoroutine(obj.GetComponent<Box>().BoxFallInPit());
                     return;
                 }

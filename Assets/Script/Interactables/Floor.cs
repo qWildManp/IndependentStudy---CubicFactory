@@ -59,10 +59,13 @@ public class Floor : MonoBehaviour
         return isHole;
     }
 
-    public void SetFilledUp()
+    public void SetFilledUp(bool canElectrify)
     {
         isHole = false;
         isAccessible = true;
+        canElectrified = canElectrify;
+        // Also make ground conduct power if neighbor has electricity
+
         boxCollider.center = Vector3.zero;
     }
 
