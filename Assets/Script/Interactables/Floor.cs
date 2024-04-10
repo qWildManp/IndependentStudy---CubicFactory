@@ -64,8 +64,11 @@ public class Floor : MonoBehaviour
         isHole = false;
         isAccessible = true;
         canElectrified = canElectrify;
-        // Also make ground conduct power if neighbor has electricity
-
+        if (canElectrified)
+        {
+            electrifyEffect = transform.Find("Electrify").gameObject;
+            blockingCollider = transform.Find("Collider").gameObject;
+        }
         boxCollider.center = Vector3.zero;
     }
 
