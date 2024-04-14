@@ -14,26 +14,17 @@ public class Door : ControllerObjectBase
     {
         doorAniamtor = GetComponent<Animator>();
     }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
     public override void Activate()
     {
+        isOpen = true;
         activated = true;
         doorAniamtor.Play("DoorOpen");
     }
 
     public override void Deactivate()
     {
+        isOpen = false;
         activated = false;
         doorAniamtor.Play("DoorClose");
     }

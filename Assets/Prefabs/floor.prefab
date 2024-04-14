@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb365b878167844491656af80cb4067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Floor
   itemID: 1
   isAccessible: 1
-  hasWireProperties: 0
+  canElectrified: 0
+  isElectrified: 0

@@ -24,6 +24,7 @@ public class GridSystem : MonoBehaviour
     private bool[,] boxMovingTarget; // Controls whether the cell in the system is currently null, but will be receiving a box soon. If so, no more boxes should be allowed to move into the place.
 
     private List<Floor> electrifiedFloor;
+    private Vector2Int lastBatteryPos = new Vector2Int(-1, -1);
 
     private void Awake()
     {
@@ -279,10 +280,19 @@ public class GridSystem : MonoBehaviour
             if (cell.Floor != null)
             {
                 Floor cur = cell.Floor.GetComponent<Floor>();
+                // Deal with special case that the floor is hole, fill it up
                 if (cur.GetIsHole())
                 {
-                    cur.SetFilledUp();
+                    cur.SetFilledUp(obj.GetComponent<Box>().GetCanElectrify());
+                    if (obj.GetComponent<Box>().GetCanElectrify())
+                    {
+                        if (lastBatteryPos.x != -1)
+                        {
+                            CheckForElectricityRoute(lastBatteryPos);
+                        }
+                    }
                     StartCoroutine(obj.GetComponent<Box>().BoxFallInPit());
+
                     return;
                 }
             }
@@ -293,6 +303,7 @@ public class GridSystem : MonoBehaviour
     //Electrify all the floors connected to the battery
     public void CheckForElectricityRoute(Vector2Int pos)
     {
+        lastBatteryPos = pos;
         if (electrifiedFloor == null)
         {
             electrifiedFloor = new();
