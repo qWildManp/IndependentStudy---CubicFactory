@@ -37,7 +37,8 @@ public class CamRootRotation : MonoBehaviour
                 EventBus.Broadcast(EventTypes.CamRootCounterClockWiseRotate);
         }
 
-        transform.DOMove(followObj.position + new Vector3(0,rootOffset,0), 0.5f);
+        transform.position = followObj.position + new Vector3(0, rootOffset, 0);
+        //transform.DOMove(followObj.position + new Vector3(0,rootOffset,0), 0.5f);
     }
 
     void ClockWiseRotation()
