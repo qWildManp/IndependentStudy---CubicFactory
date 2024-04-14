@@ -495,10 +495,9 @@ namespace StarterAssets
                     {
                         ChangePushStatus(true);
                         // TODO: Actual Movement
-                        Direction boxPushDir = ComputeDirBasedOnVector(normalizeInput);
                         Vector3 playerMoveDir = new Vector3(normalizeInput.x, 0, normalizeInput.y);
                         //Box Push
-                        if (attachedBox.Move(boxPushDir))// if box able to move
+                        if (attachedBox.Move(normalizeInput))// if box able to move
                         {
                              //Player Move
                              transform.DOMove(transform.position + playerMoveDir, 1).OnComplete(() =>
@@ -511,7 +510,7 @@ namespace StarterAssets
                             ChangePushStatus(false);
                         }
                         
-                        Debug.Log("Push:" +boxPushDir);
+                        //Debug.Log("Push:" +boxPushDir);
                     }
                     
                 }else if (-1 * playerBoxDir == normalizeInput)//pull
@@ -521,19 +520,21 @@ namespace StarterAssets
                     {
                         ChangePullStatus(true);
                         // TODO: Actual Movement
-                        Direction boxPullDir = ComputeDirBasedOnVector(normalizeInput);
                         Vector3 playerMoveDir = new Vector3(normalizeInput.x, 0, normalizeInput.y);
                         //Box Push
                         RaycastHit hit;
                         Ray castingRay = new Ray(transform.position + new Vector3(0,1,0),new Vector3(normalizeInput.x,0,normalizeInput.y));
                         if (!Physics.Raycast(castingRay, out hit,maxDistance:GridSystem.Instance.cellSize))// if player has enough space to back
                         {
-                            attachedBox.Move(boxPullDir);
-                            //Player Move
-                            transform.DOMove(transform.position + playerMoveDir, 1).OnComplete(() =>
+                            if (attachedBox.Move(normalizeInput))
                             {
-                                ResetInteractingStatus();
-                            });
+                               //Player Move
+                                transform.DOMove(transform.position + playerMoveDir, 1).OnComplete(() =>
+                                {
+                                    ResetInteractingStatus();
+                                }); 
+                            }
+                            
                         }
                         else
                         {
@@ -571,28 +572,7 @@ namespace StarterAssets
             isInteracting = pulling;
             _animator.SetBool(_animIDPullAnimation, pulling);
         }
-
-        private Direction ComputeDirBasedOnVector(Vector2 dir)
-        {
-            if (dir.x != 0 && Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
-            {
-                if (dir.x < 0)
-                    return Direction.N;
-                
-                return Direction.S;
-            }
-            else if (dir.y != 0 && Mathf.Abs(dir.y) > Mathf.Abs(dir.x))
-            {
-                if (dir.y < 0)
-                    return Direction.W;
-                
-                return Direction.E;
-            }
-            else
-            {
-                return Direction.None;
-            }
-        }
+        
         public Vector2 RotateVector(Vector2 v, float angle)
         {
             float radian = angle*Mathf.Deg2Rad;
