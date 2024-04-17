@@ -19,6 +19,7 @@ public class Door : ControllerObjectBase
     {
         isOpen = true;
         activated = true;
+        powerIndicator.material = hasPowerMat;
         doorAniamtor.Play("DoorOpen");
     }
 
@@ -26,6 +27,7 @@ public class Door : ControllerObjectBase
     {
         isOpen = false;
         activated = false;
+        powerIndicator.material = noPowerMat;
         doorAniamtor.Play("DoorClose");
     }
     

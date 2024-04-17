@@ -20,6 +20,8 @@ public class ConveyorController : ControllerObjectBase
     public override void Activate()
     {
         activated = true;
+        if(powerIndicator)
+            powerIndicator.material = hasPowerMat;
         foreach (var belt in controlledConveyorBelts)
         {
             belt.EnableBelt();
@@ -28,6 +30,8 @@ public class ConveyorController : ControllerObjectBase
     public override void Deactivate()
     {
         activated = false;
+        if(powerIndicator)
+            powerIndicator.material = noPowerMat;
         foreach (var belt in controlledConveyorBelts)
         {
             belt.DisableBelt();
