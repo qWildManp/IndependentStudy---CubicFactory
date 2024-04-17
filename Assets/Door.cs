@@ -10,9 +10,8 @@ public class Door : ControllerObjectBase
 
     private Animator doorAniamtor;
     // Start is called before the first frame update
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
         doorAniamtor = GetComponent<Animator>();
     }
     

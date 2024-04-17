@@ -12,7 +12,7 @@ namespace Script.Objects
         public abstract void Activate();
         public abstract void Deactivate();
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             if(activated)
                 Activate();

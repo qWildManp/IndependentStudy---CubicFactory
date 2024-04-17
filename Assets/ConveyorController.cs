@@ -8,14 +8,6 @@ public class ConveyorController : ControllerObjectBase
     public ConveyorBelt[] controlledConveyorBelts;
     
     // Start is called before the first frame update
-    void Start()
-    {
-        if (activated)
-        {
-            Activate();
-        }
-        Debug.Log(controlledConveyorBelts.Length);
-    }
 
     public override void Activate()
     {
