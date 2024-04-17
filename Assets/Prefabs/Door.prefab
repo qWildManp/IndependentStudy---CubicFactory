@@ -61,7 +61,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8866745656353260103}
   - {fileID: 5353355849364031498}
   m_Father: {fileID: 3316143048660675994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -176,11 +175,11 @@ Transform:
   m_GameObject: {fileID: 3465589980112484179}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.216, y: 0.7, z: 0.99799985}
+  m_LocalPosition: {x: -0.216, y: 1.7000002, z: -0.002000173}
   m_LocalScale: {x: 0.14855999, y: 0.41917333, z: 0.67736}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5891369268363321021}
+  m_Father: {fileID: 3316143048660675994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4123213806609992199
 MeshFilter:
@@ -494,6 +493,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8866745656353260103}
   - {fileID: 5891369268363321021}
   - {fileID: 8290922407162939932}
   - {fileID: 3347938752858388911}
@@ -533,10 +533,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activated: 0
-  isOpen: 0
   powerIndicator: {fileID: 1186158470825775659}
   hasPowerMat: {fileID: 2100000, guid: f0a298db071e85c4d8075acefed61925, type: 2}
   noPowerMat: {fileID: 2100000, guid: e6191fadd1c11e94a88512f7cd1a8db2, type: 2}
+  isOpen: 0
 --- !u!1 &7329965299044885395
 GameObject:
   m_ObjectHideFlags: 0
