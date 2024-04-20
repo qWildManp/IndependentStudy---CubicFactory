@@ -10,23 +10,29 @@ public class Door : ControllerObjectBase
 
     private Animator doorAniamtor;
     // Start is called before the first frame update
-    private void Awake()
+    protected void Awake()
     {
         doorAniamtor = GetComponent<Animator>();
     }
     
     public override void Activate()
     {
+        if(!isOpen)
+            doorAniamtor.Play("DoorOpen");
         isOpen = true;
         activated = true;
-        doorAniamtor.Play("DoorOpen");
+        powerIndicator.material = hasPowerMat;
+        
     }
 
     public override void Deactivate()
     {
+        if(isOpen)
+            doorAniamtor.Play("DoorClose");
         isOpen = false;
         activated = false;
-        doorAniamtor.Play("DoorClose");
+        powerIndicator.material = noPowerMat;
+       
     }
     
     
