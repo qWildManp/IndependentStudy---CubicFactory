@@ -17,18 +17,22 @@ public class Door : ControllerObjectBase
     
     public override void Activate()
     {
+        if(!isOpen)
+            doorAniamtor.Play("DoorOpen");
         isOpen = true;
         activated = true;
         powerIndicator.material = hasPowerMat;
-        doorAniamtor.Play("DoorOpen");
+        
     }
 
     public override void Deactivate()
     {
+        if(isOpen)
+            doorAniamtor.Play("DoorClose");
         isOpen = false;
         activated = false;
         powerIndicator.material = noPowerMat;
-        doorAniamtor.Play("DoorClose");
+       
     }
     
     
