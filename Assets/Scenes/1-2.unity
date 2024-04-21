@@ -8748,12 +8748,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1818994844}
+      objectReference: {fileID: 1871778581}
     - target: {fileID: 228366164626176472, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1871778581}
+      objectReference: {fileID: 1818994844}
+    - target: {fileID: 228366164626176472, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowPausePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 228366164626176472, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayBtnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 228366164626176472, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 228366164626176472, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4286736477233343891, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -16583,15 +16603,15 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1221510954}
+  - {fileID: 1871778580}
+  - {fileID: 1818994843}
+  - {fileID: 927649333}
   - {fileID: 5493228271237196544}
   - {fileID: 158685188}
   - {fileID: 1138533038}
   - {fileID: 544803628}
   - {fileID: 1083351354}
-  - {fileID: 1871778580}
   - {fileID: 849192672}
   - {fileID: 1291779848}
   - {fileID: 194433415}
   - {fileID: 912987184}
-  - {fileID: 1818994843}
-  - {fileID: 927649333}

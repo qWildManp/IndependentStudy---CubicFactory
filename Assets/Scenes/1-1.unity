@@ -22315,32 +22315,62 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1838339785}
+      objectReference: {fileID: 1871778579}
     - target: {fileID: 4286736477233343891, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1871778579}
+      objectReference: {fileID: 1838339785}
+    - target: {fileID: 4286736477233343891, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReTryLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4286736477233343891, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayBtnClick
+      objectReference: {fileID: 0}
     - target: {fileID: 4363203209916549174, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1838339785}
+      objectReference: {fileID: 1871778579}
     - target: {fileID: 4363203209916549174, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1871778579}
+      objectReference: {fileID: 1838339785}
+    - target: {fileID: 4363203209916549174, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToMain
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363203209916549174, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayBtnClick
+      objectReference: {fileID: 0}
     - target: {fileID: 4725102794814398964, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1838339785}
-    - target: {fileID: 4725102794814398964, guid: fcca06add8c702844ae0690a44c26b5b,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1871778581}
+    - target: {fileID: 4725102794814398964, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1838339785}
+    - target: {fileID: 4725102794814398964, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 4725102794814398964, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayBtnClick
+      objectReference: {fileID: 0}
     - target: {fileID: 5169952912046436350, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_Pivot.x
@@ -22620,12 +22650,15 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 5824705574555482616}
+  - {fileID: 1871778580}
+  - {fileID: 5504336095581904855}
+  - {fileID: 768805636}
   - {fileID: 5493228271237196544}
   - {fileID: 158685188}
   - {fileID: 1138533038}
   - {fileID: 544803628}
   - {fileID: 1083351354}
-  - {fileID: 1871778580}
   - {fileID: 1291779848}
   - {fileID: 849192672}
   - {fileID: 1870638299}
@@ -22635,6 +22668,3 @@ SceneRoots:
   - {fileID: 128290115}
   - {fileID: 7766520622407391380}
   - {fileID: 1279962220}
-  - {fileID: 5824705574555482616}
-  - {fileID: 5504336095581904855}
-  - {fileID: 768805636}
