@@ -12,4 +12,5 @@ public enum EventTypes
     ShowInteractHint,
     DisableInteraction,
     OntoConveyorBelt,
+    PauseGame,
 }

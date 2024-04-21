@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoSingleton<UIManager>
 {
     // Start is called before the first frame update
     public GameObject inWorldHint;
-
+    public CanvasGroup pausePanel;
     private void Awake()
     {
         EventBus.AddListener<Vector3,bool>(EventTypes.ShowInteractHint,UpdateInteractHint);
@@ -37,5 +38,16 @@ public class UIManager : MonoSingleton<UIManager>
             inWorldHint.SetActive(show);
         }
         
+    }
+
+    public void ShowPausePanel()
+    {
+        pausePanel.gameObject.SetActive(true);
+    }
+
+    public void Resume()
+    {
+        pausePanel.gameObject.SetActive(false);
+        EventBus.Broadcast(EventTypes.PauseGame,false);
     }
 }

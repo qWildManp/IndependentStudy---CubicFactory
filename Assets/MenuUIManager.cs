@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+
 
 public class MenuUIManager : MonoSingleton<MenuUIManager>
 {
@@ -11,17 +13,16 @@ public class MenuUIManager : MonoSingleton<MenuUIManager>
     public void StartLevel(string LevelName)
     {
         StartCoroutine(DelayLoadLevel(LevelName));
-
     }
 
     IEnumerator DelayLoadLevel(string LevelName)
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.15f);
         SceneManager.LoadScene(LevelName);
     }
     public void ExitGame()
     {
-        DOVirtual.DelayedCall(0.3f, Application.Quit);
+        DOVirtual.DelayedCall(0.15f, Application.Quit);
     }
 
     public void StartGame()
@@ -32,7 +33,7 @@ public class MenuUIManager : MonoSingleton<MenuUIManager>
             startGamePanel.blocksRaycasts = false;
             levelSelectPanel.interactable = true;
             levelSelectPanel.blocksRaycasts = true;
-            levelSelectPanel.transform.DOMoveX(360f, 0.5f);
+            levelSelectPanel.transform.DOMoveX(350f, 0.5f);
         });
     }
 
@@ -47,4 +48,5 @@ public class MenuUIManager : MonoSingleton<MenuUIManager>
             startGamePanel.DOFade(1, 0.5f);
         });
     }
+    
 }
