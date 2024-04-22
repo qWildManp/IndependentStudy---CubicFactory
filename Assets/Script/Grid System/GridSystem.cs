@@ -20,7 +20,12 @@ public class GridSystem : MonoBehaviour
     public int columns = 10;
     public float cellSize = 1.0f; // Size of each grid cell
 
+    [SerializeField]
+    private GameObject steelBoxPrefab;
+
     public GridCell[,] gridArray;
+
+
     private bool[,] boxMovingTarget; // Controls whether the cell in the system is currently null, but will be receiving a box soon. If so, no more boxes should be allowed to move into the place.
 
     private List<Floor> electrifiedFloor;
@@ -368,5 +373,20 @@ public class GridSystem : MonoBehaviour
         }
 
         return neighbor;
+    }
+
+    // Providing a convertion of normal box into steel ones on a given grid position
+    public Interactable ConvertBoxType(Vector2Int pos)
+    {
+        GameObject box = GetObjectAbove(pos);
+        if (box != null && box.GetComponent<Box>().itemID == BoxID.Box)
+        {
+            Destroy(box);
+            GameObject newBox = Instantiate(steelBoxPrefab, GridToWorldPosition(pos) + Vector3.up * .5f, Quaternion.identity).gameObject;
+            gridArray[pos.x, pos.y].Obj = newBox;
+            return newBox.GetComponent<Interactable>();
+        }
+        // If the above condition is not satisfied, return the original
+        return box == null? null : box.GetComponent<Interactable>();
     }
 }

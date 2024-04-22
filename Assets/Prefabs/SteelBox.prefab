@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Box
-  itemID: 1
+  itemID: 4
   canElectrify: 1
 --- !u!65 &67196598662408323
 BoxCollider:

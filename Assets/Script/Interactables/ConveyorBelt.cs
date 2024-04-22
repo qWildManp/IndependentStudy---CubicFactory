@@ -13,6 +13,8 @@ public class ConveyorBelt : Floor
     private SpriteRenderer arrowIndicator;
     [SerializeField]
     private float reattemptTime = 2.5f;
+    [SerializeField]
+    private bool isConverter = false; // Converters also convert the box type from normal into steels once box enter
     // After how long will belt try to move the box on it again
     private Coroutine beltRunning;
     private Coroutine arroeIndicating;
@@ -122,6 +124,7 @@ public class ConveyorBelt : Floor
     }
     private IEnumerator RunningBeltCor()
     {
+        Debug.Log("OnTrun");
         WaitForSeconds reattemptWait = new WaitForSeconds(reattemptTime);
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
         while (true)
@@ -137,6 +140,10 @@ public class ConveyorBelt : Floor
                 aboveObject.TryGetComponent<ThirdPersonController>(out player);
                 if (interactableObject)
                 {
+                    if (isConverter)
+                    {
+                        interactableObject = GridSystem.Instance.ConvertBoxType(gridPos);
+                    }
                     ConveyObject(interactableObject);
                 }else if (player)
                 {
