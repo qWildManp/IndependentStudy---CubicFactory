@@ -44,7 +44,21 @@ public class GridSystem : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
+    private void Start()
+    {
+        for(int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                if (gridArray[i,j].Obj != null && gridArray[i, j].Obj.GetComponent<Box>().itemID == BoxID.Battery)
+                {
+                    CheckForNewRoute(new Vector2Int(i, j));
+                }
+            }
+        }
+    }
+
 
     // Start is called before the first frame update
     public void UpdatePlayerGridInfo()
@@ -322,8 +336,15 @@ public class GridSystem : MonoBehaviour
             }
             electrifiedFloor.Clear();
         }
+        CheckForNewRoute(pos);
+    }
 
-
+    private void CheckForNewRoute(Vector2Int pos)
+    {
+        if (electrifiedFloor == null)
+        {
+            electrifiedFloor = new();
+        }
         // Loop through all potentials
         Queue<Vector2Int> q = new();
         HashSet<Vector2> visited = new();
@@ -339,7 +360,7 @@ public class GridSystem : MonoBehaviour
                     electrifiedFloor.Add(f);
 
                     List<Vector2Int> l = GetNeighbors(p);
-                    foreach(Vector2Int l2 in l)
+                    foreach (Vector2Int l2 in l)
                     {
                         if (!visited.Contains(l2))
                             q.Enqueue((Vector2Int)l2);
