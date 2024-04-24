@@ -19877,6 +19877,8 @@ MonoBehaviour:
   playerAttachBox: {fileID: 0}
   camRoot: {fileID: 1138533039}
   gamePause: 0
+  blackMaskMat: {fileID: 2100000, guid: 71e475ae4620289429f04bbb01488408, type: 2}
+  subLevelMasks: []
 --- !u!4 &1871778580
 Transform:
   m_ObjectHideFlags: 0
