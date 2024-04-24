@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,8 @@ public class GameManager : MonoSingleton<GameManager>
     
     [SerializeField] public CamRootRotation camRoot;
     [SerializeField] public bool gamePause;
+    [SerializeField] public Material blackMaskMat;
+    [SerializeField] public List<GameObject> subLevelMasks;
     
     // Start is called before the first frame update
     void Start()
@@ -38,6 +41,11 @@ public class GameManager : MonoSingleton<GameManager>
                 UIManager.Instance.ShowPausePanel();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            HideLevelMask(1);
+        }
     }
 
     protected override void Init()
@@ -54,6 +62,7 @@ public class GameManager : MonoSingleton<GameManager>
         EventBus.RemoveListener(EventTypes.ClearPlayerInteractBox,ClearPlayerAttachBox);
         EventBus.RemoveListener<Box>(EventTypes.RemovePlayerInteractingBox,RemoveInteractingBox);
         EventBus.RemoveListener<bool>(EventTypes.PauseGame,PauseGame);
+        blackMaskMat.color = Color.black;
     }
 
     public bool SetPlayerAttachBox(Box interactBox)// set player attached Box
@@ -123,5 +132,15 @@ public class GameManager : MonoSingleton<GameManager>
         yield return new WaitForSecondsRealtime(0.15f);
         Time.timeScale = 1;
         SceneManager.LoadScene(LevelName);
+    }
+
+    public void HideLevelMask(int sublevelID)
+    {
+        blackMaskMat.DOFade(0, 1).OnComplete(() =>
+        {
+            subLevelMasks[sublevelID].SetActive(false);
+            blackMaskMat.color = Color.black;
+        });
+        
     }
 }
