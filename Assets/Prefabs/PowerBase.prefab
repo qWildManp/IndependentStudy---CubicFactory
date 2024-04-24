@@ -51,7 +51,6 @@ MonoBehaviour:
   isAccessible: 1
   canElectrified: 1
   isElectrified: 0
-  charged: 0
   controlledObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -74,8 +73,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.23151547, z: 1}
-  m_Center: {x: 0, y: 0.38424227, z: 0}
+  m_Size: {x: 0.8014753, y: 0.23151547, z: 0.85702515}
+  m_Center: {x: 0.011130691, y: 0.38424227, z: 0.0013933182}
 --- !u!1 &8254204741417625288
 GameObject:
   m_ObjectHideFlags: 0
