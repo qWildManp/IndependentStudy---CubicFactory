@@ -51,7 +51,7 @@ public class GridSystem : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                if (gridArray[i,j].Obj != null && gridArray[i, j].Obj.GetComponent<Box>().itemID == BoxID.Battery)
+                if (gridArray[i,j].Obj != null && gridArray[i, j].Obj.GetComponent<Box>() != null && gridArray[i, j].Obj.GetComponent<Box>().itemID == BoxID.Battery)
                 {
                     CheckForNewRoute(new Vector2Int(i, j));
                 }
