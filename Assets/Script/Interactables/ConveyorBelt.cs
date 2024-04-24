@@ -124,7 +124,6 @@ public class ConveyorBelt : Floor
     }
     private IEnumerator RunningBeltCor()
     {
-        Debug.Log("OnTrun");
         WaitForSeconds reattemptWait = new WaitForSeconds(reattemptTime);
         Vector2Int gridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
         while (true)

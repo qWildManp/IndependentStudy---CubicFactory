@@ -288,8 +288,9 @@ public class GridSystem : MonoBehaviour
                 // Deal with special case that the floor is hole, fill it up
                 if (cur.GetIsHole())
                 {
-                    cur.SetFilledUp(obj.GetComponent<Box>().GetCanElectrify());
-                    if (obj.GetComponent<Box>().GetCanElectrify())
+                    bool canE = obj.GetComponent<Box>().GetCanElectrify();
+                    cur.SetFilledUp(canE);
+                    if (canE)
                     {
                         if (lastBatteryPos.x != -1)
                         {

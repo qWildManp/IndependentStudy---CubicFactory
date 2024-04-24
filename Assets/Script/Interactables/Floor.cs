@@ -27,8 +27,15 @@ public class Floor : MonoBehaviour
     {
         if (canElectrified)
         {
-            electrifyEffect = transform.Find("Electrify").gameObject;
-            blockingCollider = transform.Find("Collider").gameObject;
+            try
+            {
+                blockingCollider = transform.Find("Collider").gameObject;
+                electrifyEffect = transform.Find("Electrify").gameObject;
+            }
+            catch
+            {
+                Debug.LogWarning("Either effect or collider not detected");
+            }
         }
 
         boxCollider = GetComponent<BoxCollider>();
@@ -71,8 +78,15 @@ public class Floor : MonoBehaviour
         canElectrified = canElectrify;
         if (canElectrified)
         {
-            electrifyEffect = transform.Find("Electrify").gameObject;
-            blockingCollider = transform.Find("Collider").gameObject;
+            try
+            {
+                blockingCollider = transform.Find("Collider").gameObject;
+                electrifyEffect = transform.Find("Electrify").gameObject;
+            }
+            catch
+            {
+                Debug.LogWarning("Either effect or collider not detected");
+            }
         }
         boxCollider.center = Vector3.zero;
     }
