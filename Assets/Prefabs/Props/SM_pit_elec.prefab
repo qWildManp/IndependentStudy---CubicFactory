@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7757571522462178806}
   - component: {fileID: 3694158428305193139}
   m_Layer: 0
-  m_Name: SM_pit
+  m_Name: SM_pit_elec
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608302732765051411}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 1
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bc521e21d4663d34cbbc4d60f9b242ed, type: 2}
+  - {fileID: 2100000, guid: 40451f5608121f54f906d77b3adc2649, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
