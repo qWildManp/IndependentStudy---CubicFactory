@@ -323,7 +323,6 @@ public class GridSystem : MonoBehaviour
     //Electrify all the floors connected to the battery
     public void CheckForElectricityRoute(Vector2Int pos)
     {
-        lastBatteryPos = pos;
         if (electrifiedFloor == null)
         {
             electrifiedFloor = new();
@@ -341,6 +340,7 @@ public class GridSystem : MonoBehaviour
 
     private void CheckForNewRoute(Vector2Int pos)
     {
+        lastBatteryPos = pos;
         if (electrifiedFloor == null)
         {
             electrifiedFloor = new();
