@@ -460,7 +460,11 @@ namespace StarterAssets
             Box attachedBox = GameManager.Instance.GetPlayerAttachedBox();
             if (!attachedBox||!Grounded||GameManager.Instance.camRoot.isRotating)// if mouse is not close to box or in the air or cam is rotating
             {
-                return;
+                if (!attachedBox)// if it is because player dont have attach box
+                {
+                    ChangePushStatus(false);
+                }
+                return; 
             }
             
             Vector2Int playerGridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
