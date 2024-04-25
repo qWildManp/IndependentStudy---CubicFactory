@@ -53,10 +53,14 @@ public class PowerBaseFloor : Floor
         {
             if (useConductivity&&EndWire && EndWire.GetIsElectrified())
             {
-                    foreach (var controlled in controlledObjects)
-                    {
-                        controlled.Activate();
-                    }
+                if (controlledObjects.Length > 0)
+                {
+                   foreach (var controlled in controlledObjects)
+                   {
+                       controlled.Activate();
+                   } 
+                }
+                    
             }
         }
     }
