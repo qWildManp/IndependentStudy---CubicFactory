@@ -10,7 +10,7 @@ public class Floor : MonoBehaviour
     [Tooltip("Whether box & player can step onto")]
     private bool isAccessible;
     private bool isCharger;
-    private bool isHole; // Box can be pushed into holes to make it normal floor
+    [SerializeField]private bool isHole; // Box can be pushed into holes to make it normal floor
 
     // The following variables are used for examining electricity flow
     [SerializeField]
@@ -20,24 +20,29 @@ public class Floor : MonoBehaviour
 
     private BoxCollider boxCollider;
 
-    private GameObject electrifyEffect;
-    private GameObject blockingCollider;
+    [SerializeField]private GameObject electrifyEffect;
+    [SerializeField]private GameObject blockingCollider;
 
     private void Start()
     {
-        if (canElectrified)
+        try
         {
-            try
-            {
-                blockingCollider = transform.Find("Collider").gameObject;
-                electrifyEffect = transform.Find("Electrify").gameObject;
-            }
-            catch
-            {
-                Debug.LogWarning("Either effect or collider not detected");
-            }
+            electrifyEffect = transform.Find("Electrify").gameObject;
+            blockingCollider = transform.Find("Collider").gameObject;
         }
-
+        catch
+        {
+            Debug.LogWarning("Either effect or collider not detected");
+        }
+        
+        if (!isElectrified)
+        {
+            StopElectrify();
+        }
+        else
+        {
+            ForceElectrify();
+        }
         boxCollider = GetComponent<BoxCollider>();
         // TODO: Temporary solution for setting properties
         if (itemID == FloorID.ChargingStation)
@@ -112,7 +117,16 @@ public class Floor : MonoBehaviour
         }
         return false;
     }
-
+    public virtual bool ForceElectrify()
+    {
+            isElectrified = true;
+            // Enable visual effects
+            if (electrifyEffect != null)
+                electrifyEffect.SetActive(true);
+            if (blockingCollider != null)
+                blockingCollider.SetActive(true);
+            return true;
+    }
     public virtual void StopElectrify()
     {
         if (electrifyEffect != null)

@@ -7,11 +7,21 @@ using UnityEngine;
 public class PowerBaseFloor : Floor
 {
     public ControllerObjectBase[] controlledObjects;
-
+    public bool useConductivity;
+    public Floor EndWire;
+    public Floor[] connectedWires;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Battery>())
+        if (!useConductivity && other.GetComponent<Battery>())
         {
+            if (connectedWires.Length > 0)// for each connected wire, make it electrify
+            {
+               foreach (var wire in connectedWires)
+               {
+                   wire.ForceElectrify();
+               } 
+            }
+            
             foreach (var controlled in controlledObjects)
             {
                 controlled.Activate();
@@ -23,9 +33,30 @@ public class PowerBaseFloor : Floor
     {
         if (other.GetComponent<Battery>())
         {
+            if (connectedWires.Length > 0)// for each connected wire, make it stop electrify
+            {
+                foreach (var wire in connectedWires)
+                {
+                    wire.StopElectrify();
+                } 
+            }
             foreach (var controlled in controlledObjects)
             {
                 controlled.Deactivate();
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<Battery>())
+        {
+            if (useConductivity&&EndWire && EndWire.GetIsElectrified())
+            {
+                    foreach (var controlled in controlledObjects)
+                    {
+                        controlled.Activate();
+                    }
             }
         }
     }
