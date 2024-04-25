@@ -54,11 +54,6 @@ public class Floor : MonoBehaviour
             isHole = true;
             isAccessible = false;
         }
-
-        if (isElectrified)
-        {
-            Electrify();
-        }
     }
 
     public bool GetIsAccessable()
