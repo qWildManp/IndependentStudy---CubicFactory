@@ -10,7 +10,7 @@ public class Floor : MonoBehaviour
     [Tooltip("Whether box & player can step onto")]
     private bool isAccessible;
     private bool isCharger;
-    private bool isHole; // Box can be pushed into holes to make it normal floor
+    [SerializeField]private bool isHole; // Box can be pushed into holes to make it normal floor
 
     // The following variables are used for examining electricity flow
     [SerializeField]
@@ -38,6 +38,10 @@ public class Floor : MonoBehaviour
         if (!isElectrified)
         {
             StopElectrify();
+        }
+        else
+        {
+            ForceElectrify();
         }
         boxCollider = GetComponent<BoxCollider>();
         // TODO: Temporary solution for setting properties
@@ -115,8 +119,6 @@ public class Floor : MonoBehaviour
     }
     public virtual bool ForceElectrify()
     {
-        
-        Debug.Log(name + "ForceActive");
             isElectrified = true;
             // Enable visual effects
             if (electrifyEffect != null)
@@ -127,7 +129,6 @@ public class Floor : MonoBehaviour
     }
     public virtual void StopElectrify()
     {
-        Debug.Log(name + " Deactive");
         if (electrifyEffect != null)
             electrifyEffect.SetActive(false);
         if (blockingCollider != null)

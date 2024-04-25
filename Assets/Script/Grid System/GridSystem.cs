@@ -303,6 +303,7 @@ public class GridSystem : MonoBehaviour
                 if (cur.GetIsHole())
                 {
                     bool canE = obj.GetComponent<Box>().GetCanElectrify();
+                    Debug.Log("Fill inHole");
                     cur.SetFilledUp(canE);
                     if (canE)
                     {
