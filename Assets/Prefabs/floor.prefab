@@ -47,42 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 1
   isAccessible: 1
+  isHole: 0
   canElectrified: 0
   isElectrified: 0
---- !u!1 &3981990870429844495
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 42670a808d24ca440801b1ea955030f9,
-    type: 3}
-  m_PrefabInstance: {fileID: 4288471692803373406}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4326005641540902581}
-  - component: {fileID: 8295066160026853301}
-  m_Layer: 0
-  m_Name: 'SM_tiles (Missing Prefab with guid: 42670a808d24ca440801b1ea955030f9)'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4326005641540902581
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 42670a808d24ca440801b1ea955030f9,
-    type: 3}
-  m_PrefabInstance: {fileID: 4288471692803373406}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3981990870429844495}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 9144412651671377605}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  electrifyEffect: {fileID: 0}
+  blockingCollider: {fileID: 0}
 --- !u!1001 &4288471692803373406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -185,6 +154,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8295066160026853301}
   m_SourcePrefab: {fileID: 100100000, guid: 42670a808d24ca440801b1ea955030f9, type: 3}
+--- !u!1 &3981990870429844495 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 42670a808d24ca440801b1ea955030f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4288471692803373406}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &8295066160026853301
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -207,3 +182,9 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7629811779324647873, guid: 42670a808d24ca440801b1ea955030f9, type: 3}
+--- !u!4 &4326005641540902581 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 42670a808d24ca440801b1ea955030f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4288471692803373406}
+  m_PrefabAsset: {fileID: 0}
