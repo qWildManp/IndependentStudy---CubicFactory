@@ -11853,6 +11853,41 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: SoundManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 1089119487620867732, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089119487620867732, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089119487620867732, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089119487620867732, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089119487620867732, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 91.647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089119487620867732, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 309
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089119487620867732, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 2063137145563067504, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_fontAsset
