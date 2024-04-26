@@ -89,7 +89,8 @@ public class ConveyorBelt : Floor
 
     public override void StopElectrify()
     {
-        DisableBelt();
+        if(isElectrified)
+            DisableBelt();
     }
 
     public void EnableBelt()
