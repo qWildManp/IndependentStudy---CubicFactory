@@ -24,7 +24,8 @@ public class CameraSwitcher : MonoBehaviour
 
     IEnumerator SwitchCamera()
     {
-        yield return new WaitForSeconds(1);
+        //Wait for 1 seconds to fade out
+        //yield return new WaitForSeconds(1);
         // Fade in
         float timer = 0f;
         while (timer < fadeDuration)
