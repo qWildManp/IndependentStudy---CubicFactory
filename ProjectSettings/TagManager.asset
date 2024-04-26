@@ -9,6 +9,7 @@ TagManager:
   - CinemachineTarget
   - Box
   - DynamicObject
+  - Ignore Raycast
   layers:
   - Default
   - TransparentFX
