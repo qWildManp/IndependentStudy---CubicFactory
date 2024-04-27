@@ -504,6 +504,7 @@ namespace StarterAssets
                         if (attachedBox.Move(normalizeInput))// if box able to move
                         {
                              //Player Move
+                             SoundManager.Instance.PlayBoxPush();
                              transform.DOMove(transform.position + playerMoveDir, 1).OnComplete(() =>
                              {
                                  ResetInteractingStatus();
@@ -533,6 +534,7 @@ namespace StarterAssets
                             if (attachedBox.Move(normalizeInput))
                             {
                                //Player Move
+                               SoundManager.Instance.PlayBoxPush();
                                 transform.DOMove(transform.position + playerMoveDir, 1).OnComplete(() =>
                                 {
                                     ResetInteractingStatus();

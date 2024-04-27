@@ -45,4 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnClickSFX: {fileID: 8300000, guid: 02baf6fe2c26a194f848ef4a0619f533, type: 3}
+  boxPushSFX: {fileID: 8300000, guid: d9cdcaff62fb3bc40ab1ff76d117c95a, type: 3}
+  rewardSFX: {fileID: 8300000, guid: dd739bd875fc59c46a91e70eb0f04b64, type: 3}
   SFXSource: {fileID: 0}

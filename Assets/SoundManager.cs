@@ -6,6 +6,7 @@ public class SoundManager : MonoSingleton<SoundManager>
 {
     public AudioClip btnClickSFX;
     public AudioClip boxPushSFX;
+    public AudioClip rewardSFX;
 
     public AudioSource SFXSource;
     // Start is called before the first frame update
@@ -29,6 +30,12 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void PlayBoxPush()
     {
         SFXSource.clip = boxPushSFX;
+        SFXSource.Play();
+    }
+
+    public void PlayCollectReward()
+    {
+        SFXSource.clip = rewardSFX;
         SFXSource.Play();
     }
 }
