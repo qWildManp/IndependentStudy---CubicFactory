@@ -100,6 +100,10 @@ public class GridSystem : MonoBehaviour
             Vector2Int gridPos = WorldToGridPosition(floor.transform.position);
             if (IsWithinGrid(gridPos))
             {
+                if (gridArray[gridPos.x, gridPos.y].Floor != null)
+                {
+                    Debug.LogWarning(floor.name+" is overlap with" + gridArray[gridPos.x, gridPos.y].Floor.name);
+                }
                 gridArray[gridPos.x, gridPos.y].Floor = floor;
                 /*if (!floor.GetComponent<Floor>().GetIsAccessable())
                 {
