@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class UIManager : MonoSingleton<UIManager>
     // Start is called before the first frame update
     public GameObject inWorldHint;
     public CanvasGroup pausePanel;
+    public TextMeshProUGUI collectCheeseResult;
     private void Awake()
     {
         EventBus.AddListener<Vector3,bool>(EventTypes.ShowInteractHint,UpdateInteractHint);
@@ -17,17 +19,6 @@ public class UIManager : MonoSingleton<UIManager>
     private void OnDestroy()
     {
         EventBus.RemoveListener<Vector3,bool>(EventTypes.ShowInteractHint,UpdateInteractHint);
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void UpdateInteractHint(Vector3 pos,bool show)
@@ -49,5 +40,10 @@ public class UIManager : MonoSingleton<UIManager>
     {
         pausePanel.gameObject.SetActive(false);
         EventBus.Broadcast(EventTypes.PauseGame,false);
+    }
+
+    public void UpdateCollectedCheese()
+    {
+        collectCheeseResult.text = GameManager.Instance.levelCollect + " / " + GameManager.Instance.maxCollect;
     }
 }

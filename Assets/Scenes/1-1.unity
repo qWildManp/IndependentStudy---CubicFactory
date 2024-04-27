@@ -2711,8 +2711,8 @@ Camera:
   m_GameObject: {fileID: 339742428}
   m_Enabled: 0
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5201,6 +5201,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 809031111}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &810073408
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6750500775693002943, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_Name
+      value: Door_Brocken
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.1007357
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.443872
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00000058114523
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319891334561847439, guid: 17e6017ef3e29cc45b32e6c82db4e3ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 17e6017ef3e29cc45b32e6c82db4e3ce, type: 3}
 --- !u!1001 &811227307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11835,12 +11903,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eea3ed4ed27e5f4695ebb03d2e08b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1924603172}
   playerAttachBox: {fileID: 0}
   camRoot: {fileID: 1138533039}
   gamePause: 0
   blackMaskMat: {fileID: 2100000, guid: 71e475ae4620289429f04bbb01488408, type: 2}
   subLevelMasks: []
+  levelCollect: 0
+  maxCollect: 2
 --- !u!4 &1871778580
 Transform:
   m_ObjectHideFlags: 0
@@ -11870,6 +11940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inWorldHint: {fileID: 1150858670}
   pausePanel: {fileID: 1965099229}
+  collectCheeseResult: {fileID: 5824705574555482617}
 --- !u!1001 &1873725172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12286,6 +12357,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1920959660}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1924603172 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2028893981087923091, guid: 42b337ce87e33e84e9e778ee321683d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1046850610}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1945075917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13316,6 +13399,11 @@ PrefabInstance:
       propertyPath: SFXSource
       value: 
       objectReference: {fileID: 768805635}
+    - target: {fileID: 835495721569172996, guid: 88c126513d7cdb44f8ce7c777f6eced0,
+        type: 3}
+      propertyPath: boxPushSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: b3c16161ff449894f93471c52191805f, type: 3}
     - target: {fileID: 1697849511523749889, guid: 88c126513d7cdb44f8ce7c777f6eced0,
         type: 3}
       propertyPath: m_Name
@@ -13564,6 +13652,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcca06add8c702844ae0690a44c26b5b, type: 3}
+--- !u!114 &5824705574555482617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4750435534858404686, guid: fcca06add8c702844ae0690a44c26b5b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5824705574555482616}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &6658539949309663025
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -13729,10 +13829,10 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 5824705574555482616}
   - {fileID: 1871778580}
+  - {fileID: 1046850610}
   - {fileID: 5504336095581904855}
   - {fileID: 1504731941}
   - {fileID: 768805636}
-  - {fileID: 1046850610}
   - {fileID: 1138533038}
   - {fileID: 544803628}
   - {fileID: 1150858669}
@@ -13747,3 +13847,4 @@ SceneRoots:
   - {fileID: 1279962220}
   - {fileID: 339742431}
   - {fileID: 1174172586}
+  - {fileID: 810073408}

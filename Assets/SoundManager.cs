@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoSingleton<SoundManager>
 {
     public AudioClip btnClickSFX;
+    public AudioClip boxPushSFX;
 
     public AudioSource SFXSource;
     // Start is called before the first frame update
@@ -22,6 +23,12 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void PlayBtnClick()
     {
         SFXSource.clip = btnClickSFX;
+        SFXSource.Play();
+    }
+
+    public void PlayBoxPush()
+    {
+        SFXSource.clip = boxPushSFX;
         SFXSource.Play();
     }
 }
