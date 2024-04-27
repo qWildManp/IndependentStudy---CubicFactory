@@ -16,11 +16,13 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] public bool gamePause;
     [SerializeField] public Material blackMaskMat;
     [SerializeField] public List<GameObject> subLevelMasks;
-    
+
+    public int levelCollect = 0;
+    public int maxCollect;
     // Start is called before the first frame update
     void Start()
     {
-        
+        UIManager.Instance.UpdateCollectedCheese();
     }
     // Update is called once per frame
     void Update()
@@ -134,6 +136,11 @@ public class GameManager : MonoSingleton<GameManager>
         SceneManager.LoadScene(LevelName);
     }
 
+    public void addCollectedCheese()
+    {
+        levelCollect += 1;
+        UIManager.Instance.UpdateCollectedCheese();
+    }
     public void HideLevelMask(int sublevelID)
     {
         blackMaskMat.DOFade(0, 1).OnComplete(() =>
@@ -141,6 +148,5 @@ public class GameManager : MonoSingleton<GameManager>
             subLevelMasks[sublevelID].SetActive(false);
             blackMaskMat.color = Color.black;
         });
-        
     }
 }

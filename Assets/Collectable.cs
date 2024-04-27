@@ -18,8 +18,14 @@ public class Collectable : Interactable
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
+        {
+            Vector2Int objectGirdPos = GridSystem.Instance.WorldToGridPosition(transform.position);
+            GridSystem.Instance.ClearCellObjectData(objectGirdPos.x, objectGirdPos.y);
+            GameManager.Instance.addCollectedCheese();
+            SoundManager.Instance.PlayCollectReward();
             Destroy(gameObject);
+        }
     }
     
 }

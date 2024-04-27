@@ -49,11 +49,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 7
   isAccessible: 1
+  isHole: 0
   canElectrified: 1
   isElectrified: 0
-  controlledObjects:
-  - {fileID: 0}
-  - {fileID: 0}
+  electrifyEffect: {fileID: 0}
+  blockingCollider: {fileID: 0}
+  controlledObjects: []
+  useConductivity: 0
+  EndWire: {fileID: 0}
+  connectedWires: []
 --- !u!65 &2567080897192788324
 BoxCollider:
   m_ObjectHideFlags: 0
