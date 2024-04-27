@@ -474,7 +474,7 @@ namespace StarterAssets
             //Debug.Log("Player -> Box Dir :" + playerBoxDir);
             int CamRotateAngle = Convert.ToInt32(GameManager.Instance.camRoot.transform.rotation.eulerAngles.y);
             
-            if (Input.GetKey(KeyCode.F)&&!beginInteract)//enter interact mode
+            if (Input.GetKey(KeyCode.Space)&&!beginInteract)//enter interact mode
             {
                 Quaternion adjustRot = Quaternion.FromToRotation(transform.forward, new Vector3(playerBoxDir.x,0,playerBoxDir.y));
                 Vector3 adjustLoc = GridSystem.Instance.GridToWorldPosition(playerGridPos);
@@ -485,7 +485,7 @@ namespace StarterAssets
                 ChangeInteractStatus(true);
                 //hide interaction hint
                 EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
-            }else if (Input.GetKeyUp(KeyCode.F))//exit interact mode
+            }else if (Input.GetKeyUp(KeyCode.Space))//exit interact mode
             {
                 ChangeInteractStatus(false);
             }
