@@ -20,13 +20,13 @@ public class GameManager : MonoSingleton<GameManager>
     public int levelCollect = 0;
     public int maxCollect;
 
-    private int nextLevel = 1;
+    private static int nextLevel = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         UIManager.Instance.UpdateCollectedCheese();
-        EventBus.AddListener(EventTypes.EnterNewLevel, EnterNextLevel);
+        EventBus.AddListener<string>(EventTypes.EnterNewLevel, EnterNextLevel);
     }
 
     // Update is called once per frame
@@ -106,10 +106,10 @@ public class GameManager : MonoSingleton<GameManager>
     /// <summary>
     /// Call to enter the next level
     /// </summary>
-    public void EnterNextLevel()
+    public void EnterNextLevel(string levelName)
     {
         nextLevel++;
-        StartCoroutine(DelayLoadLevel("1-" + nextLevel));
+        SceneManager.LoadScene(levelName);
     }
 
     public void ClearPlayerAttachBox()

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class NextLevelTrigger : MonoBehaviour
 {
+    [SerializeField] private string levelName;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            EventBus.Broadcast(EventTypes.EnterNewLevel);
+            EventBus.Broadcast<string>(EventTypes.EnterNewLevel, levelName);
         }
     }
 }
