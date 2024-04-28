@@ -19,11 +19,16 @@ public class GameManager : MonoSingleton<GameManager>
 
     public int levelCollect = 0;
     public int maxCollect;
+
+    private int nextLevel = 1;
+
     // Start is called before the first frame update
     void Start()
     {
         UIManager.Instance.UpdateCollectedCheese();
+        EventBus.AddListener(EventTypes.EnterNewLevel, EnterNextLevel);
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -97,12 +102,20 @@ public class GameManager : MonoSingleton<GameManager>
         }
         
     }
+
+    /// <summary>
+    /// Call to enter the next level
+    /// </summary>
+    public void EnterNextLevel()
+    {
+        nextLevel++;
+        StartCoroutine(DelayLoadLevel("1-" + nextLevel));
+    }
+
     public void ClearPlayerAttachBox()
     {
-        
-            this.playerAttachBox = null;
-            EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
-        
+        this.playerAttachBox = null;
+        EventBus.Broadcast(EventTypes.ShowInteractHint,transform.position + new Vector3(0,2,0),false);
     }
 
     public void RemoveInteractingBox(Box interactingBox)

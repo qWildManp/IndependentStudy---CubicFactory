@@ -13,4 +13,5 @@ public enum EventTypes
     DisableInteraction,
     OntoConveyorBelt,
     PauseGame,
+    EnterNewLevel,
 }
