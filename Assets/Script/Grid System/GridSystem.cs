@@ -47,16 +47,7 @@ public class GridSystem : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                if (gridArray[i,j].Obj != null && gridArray[i, j].Obj.GetComponent<Box>() != null && gridArray[i, j].Obj.GetComponent<Box>().itemID == BoxID.Battery)
-                {
-                    CheckForNewRoute(new Vector2Int(i, j));
-                }
-            }
-        }
+        
     }
 
 
@@ -123,6 +114,17 @@ public class GridSystem : MonoBehaviour
           
         }
 
+        for(int i = 0; i < rows; i++)//when finish init then check for Route
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                if (gridArray[i,j].Obj != null && gridArray[i, j].Obj.GetComponent<Box>() != null && gridArray[i, j].Obj.GetComponent<Box>().itemID == BoxID.Battery)
+                {
+                    CheckForNewRoute(new Vector2Int(i, j));
+                }
+            }
+        }
+        
         finishInit = true;
     }
 

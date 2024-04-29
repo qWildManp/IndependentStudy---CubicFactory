@@ -35,13 +35,13 @@ public class Floor : MonoBehaviour
             Debug.LogWarning("Either effect or collider not detected");
         }
         
-        if (!isElectrified)
+        if (isElectrified)
         {
-            StopElectrify();
+            ForceElectrify();
         }
         else
         {
-            ForceElectrify();
+            StopElectrify();
         }
         boxCollider = GetComponent<BoxCollider>();
         // TODO: Temporary solution for setting properties
