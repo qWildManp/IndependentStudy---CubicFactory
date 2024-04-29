@@ -51,6 +51,8 @@ public class PowerBaseFloor : Floor
     {
         if (other.GetComponent<Battery>())
         {
+            Debug.Log("Battery On");
+            //Electrify();
             if (useConductivity&&EndWire && EndWire.GetIsElectrified())
             {
                 if (controlledObjects.Length > 0)
