@@ -13493,6 +13493,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3279416734415938947, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.46666667
+      objectReference: {fileID: 0}
     - target: {fileID: 4286736477233343891, guid: fcca06add8c702844ae0690a44c26b5b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -13671,7 +13676,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5445437618723501042, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5824705574555482620}
+    - targetCorrespondingSourceObject: {fileID: 5445437618723501042, guid: fcca06add8c702844ae0690a44c26b5b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5824705574555482619}
   m_SourcePrefab: {fileID: 100100000, guid: fcca06add8c702844ae0690a44c26b5b, type: 3}
 --- !u!114 &5824705574555482617 stripped
 MonoBehaviour:
@@ -13685,6 +13698,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5824705574555482618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5445437618723501042, guid: fcca06add8c702844ae0690a44c26b5b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5824705574555482616}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5824705574555482619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5824705574555482618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3797ed4b83446944198d285774dc3937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 1
+--- !u!225 &5824705574555482620
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5824705574555482618}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!33 &6658539949309663025
 MeshFilter:
   m_ObjectHideFlags: 0
