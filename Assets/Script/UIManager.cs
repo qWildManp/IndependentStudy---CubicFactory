@@ -9,6 +9,7 @@ public class UIManager : MonoSingleton<UIManager>
 {
     // Start is called before the first frame update
     public GameObject inWorldHint;
+    public GameObject inWorldHintInteractPedal;
     public CanvasGroup pausePanel;
     public TextMeshProUGUI collectCheeseResult;
     private void Awake()
@@ -31,6 +32,14 @@ public class UIManager : MonoSingleton<UIManager>
         
     }
 
+    public void UpdateInteractPadalHint(Vector3 pos, bool show)
+    {
+        if (inWorldHintInteractPedal)
+        {
+            inWorldHintInteractPedal.transform.position = pos;
+            inWorldHintInteractPedal.SetActive(show);
+        }
+    }
     public void ShowPausePanel()
     {
         pausePanel.gameObject.SetActive(true);

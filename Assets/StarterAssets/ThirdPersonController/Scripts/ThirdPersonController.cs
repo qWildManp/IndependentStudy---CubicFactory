@@ -341,7 +341,6 @@ namespace StarterAssets
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
             //_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime));                 
-            Debug.Log(_speed);
             // update animator if using character
             if (_hasAnimator)
             {
@@ -358,12 +357,13 @@ namespace StarterAssets
                 _fallTimeoutDelta = FallTimeout;
 
                 // update animator if using character
+                /*
                 if (_hasAnimator)
                 {
                     _animator.SetBool(_animIDJump, false);
                     _animator.SetBool(_animIDFreeFall, false);
                 }
-
+                */
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
                 {
@@ -374,15 +374,15 @@ namespace StarterAssets
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
-                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    //_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
                     // update animator if using character
                     if (_hasAnimator)
                     {
                         _animator.SetBool(_animIDJump, true);
                     }
-                }*/
-
+                }
+                */
                 // jump timeout
                 if (_jumpTimeoutDelta >= 0.0f)
                 {
@@ -420,7 +420,14 @@ namespace StarterAssets
 
             //_controller.Move(new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
         }
-        
+
+        public void SetJumpAnim()
+        {
+            if (_hasAnimator)
+            {
+                _animator.SetTrigger(_animIDJump);
+            }
+        }
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
             if (lfAngle < -360f) lfAngle += 360f;
@@ -562,7 +569,6 @@ namespace StarterAssets
 
         private void ResetInteractingStatus()
         {
-            Debug.Log("Finish");
             isInteracting = false;
             _animator.SetBool(_animIDPushAnimation, false);
             _animator.SetBool(_animIDPullAnimation, false);
