@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -10,6 +11,9 @@ public class MenuUIManager : MonoSingleton<MenuUIManager>
 {
     public CanvasGroup startGamePanel;
     public CanvasGroup levelSelectPanel;
+    public CanvasGroup coverImg;
+
+    private Tween fadeTween;
     public void StartLevel(string LevelName)
     {
         StartCoroutine(DelayLoadLevel(LevelName));
@@ -48,5 +52,27 @@ public class MenuUIManager : MonoSingleton<MenuUIManager>
             startGamePanel.DOFade(1, 0.5f);
         });
     }
-    
+
+    public void BackToStartScene()
+    {
+        StartCoroutine(FadeIn());
+        StartCoroutine(DelayLoadStartScene());
+    }
+
+    IEnumerator DelayLoadStartScene()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadSceneAsync("StartScene");
+    }
+
+    IEnumerator FadeIn()
+    {
+        for(float i = 0; i < 1f; i += Time.deltaTime)
+        {
+            coverImg.alpha += i;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
 }
+
