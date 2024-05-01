@@ -90,7 +90,7 @@ namespace StarterAssets
         private float _cinemachineTargetPitch;
 
         // player
-        private float _speed;
+        [SerializeField]private float _speed;
         private float _animationBlend;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
@@ -187,8 +187,15 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             CheckClosestBox();
-            if(canMove)
-                Move();
+            if (canMove)
+            {
+               Move(); 
+            }
+            else
+            {
+                _speed = 0;
+            }
+                
             InteractWithBox();
             
             //Vector2Int GridPos = GridSystem.Instance.WorldToGridPosition(transform.position);
@@ -334,7 +341,7 @@ namespace StarterAssets
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
             //_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime));                 
-
+            Debug.Log(_speed);
             // update animator if using character
             if (_hasAnimator)
             {
@@ -462,7 +469,9 @@ namespace StarterAssets
             {
                 if (!attachedBox)// if it is because player dont have attach box
                 {
+                    ChangeInteractStatus(false);
                     ChangePushStatus(false);
+                    ChangePullStatus(false);
                 }
                 return; 
             }
