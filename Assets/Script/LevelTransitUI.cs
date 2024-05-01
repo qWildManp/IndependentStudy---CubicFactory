@@ -21,5 +21,6 @@ public class LevelTransitUI : MonoBehaviour
             e -= fadeSpeed * Time.deltaTime;
             yield return null;
         }
+        canvasGroup.alpha = 0;
     }
 }
