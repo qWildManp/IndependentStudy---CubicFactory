@@ -9683,6 +9683,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f26ff60903c5b44805209303e4f104, type: 3}
+--- !u!1 &988878735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6693093648283502860, guid: 7d074c676cb9d6d49a13973f09720ffc,
+    type: 3}
+  m_PrefabInstance: {fileID: 2120392786}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &997391326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17219,6 +17225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inWorldHint: {fileID: 1291779844}
+  inWorldHintInteractPedal: {fileID: 988878735}
   pausePanel: {fileID: 1685287241}
   collectCheeseResult: {fileID: 1221510955}
 --- !u!114 &1879725449 stripped
