@@ -53,7 +53,6 @@ public abstract class Interactable : MonoBehaviour
         Ray castingRay = new Ray(transform.position + new Vector3(0,1,0),new Vector3(pushDir.x,0,pushDir.y));
         if (Physics.Raycast(castingRay, out hit, maxDistance: GridSystem.Instance.cellSize)) // if there is no space to move
         {
-            Debug.Log("Hit" +  hit.transform.name);
             return false;
         }
 
