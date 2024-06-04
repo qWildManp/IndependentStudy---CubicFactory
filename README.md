@@ -1,2 +1,2 @@
-# IndependentStudy---BoxProject
+# IndependentStudy---CubicFactory
 ETC Game Independent Study Project
